@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "StudyBuddy",
+    "slug": "study-buddy",
+    "version": "0.0.1",
+    "scheme": "d",
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-dev-launcher",
+        {
+          "launchMode": "most-recent"
+        }
+      ],
+      "expo-secure-store",
+      "expo-localization",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true
+    },
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/spv2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#9BCBC5"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.yatochkadev.studybuddy"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "85862ce2-a5fe-43c4-9495-0ab652c06516"
+      }
+    }
+  }
+}
