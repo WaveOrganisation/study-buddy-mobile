@@ -1,4 +1,4 @@
-import { Text } from 'react-native';
+ghimport { Text } from 'react-native';
 import React from 'react';
 
 interface ConfirmOTPBottomSheetUI {
@@ -6,5 +6,5 @@ interface ConfirmOTPBottomSheetUI {
 }
 
 export function ConfirmOTPBottomSheetUI() {
-  return <Text>Confirm OTP</Text>;
+  return <Text>Confirm OTP YEAAAAH</Text>;
 }
