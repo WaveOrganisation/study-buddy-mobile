@@ -1,6 +1,8 @@
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import { usePostHog } from 'posthog-react-native';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -8,22 +10,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import CustomBackdrop from '@/components/CustomBackdrop';
 import SignInBottomSheetUI from '@/components/signInBottomSheetUI';
-import SignUp from '@/components/signUp';
 import { theme } from '@/theme';
-import { usePostHog } from 'posthog-react-native';
-import { ConfirmOTPBottomSheetUI } from '@/components/confirmOTPBottomSheetUI';
+import SignUpBottomSheetUI from '@/components/signUpBottomSheetUI';
 
 function SignInButton() {
   const posthog = usePostHog();
   const signInSnapPoints = useMemo(() => ['62%'], []);
-  const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
+  // const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
   const signInSheetRef = useRef<BottomSheetModal>(null);
-  const confirmOTPSheetRef = useRef<BottomSheetModal>(null);
+  // const confirmOTPSheetRef = useRef<BottomSheetModal>(null);
   const handleSignInPresentPress = useCallback(() => {
     signInSheetRef.current?.present();
     posthog.capture('Sign In Pressed');
   }, []);
-
+  const router = useRouter();
   return (
     <>
       <TouchableOpacity
@@ -53,25 +53,76 @@ function SignInButton() {
         <BottomSheetView>
           <SignInBottomSheetUI
             onSubmit={() => {
-              confirmOTPSheetRef.current?.present();
+              // confirmOTPSheetRef.current?.present();
+              router.setParams({
+                LOGINPAGEuser: '052-574-4414',
+                LOGINPAGEpassword: 'testpw',
+              });
+              router.replace('/auth/confirm-otp');
             }}
           />
         </BottomSheetView>
       </BottomSheetModal>
+      {/*<BottomSheetModal*/}
+      {/*  backdropComponent={CustomBackdrop}*/}
+      {/*  ref={confirmOTPSheetRef}*/}
+      {/*  index={1}*/}
+      {/*  snapPoints={confirmOTPSnapPoints}*/}
+      {/*  enablePanDownToClose*/}
+      {/*  backgroundStyle={{*/}
+      {/*    backgroundColor: theme.PRIMARY_COLOR,*/}
+      {/*  }}*/}
+      {/*  handleIndicatorStyle={{*/}
+      {/*    backgroundColor: '#FAFAFA',*/}
+      {/*  }}>*/}
+      {/*  <BottomSheetView>*/}
+      {/*    <ConfirmOTPBottomSheetUI />*/}
+      {/*  </BottomSheetView>*/}
+      {/*</BottomSheetModal>*/}
+    </>
+  );
+}
+function SignUpButton() {
+  const router = useRouter();
+  const posthog = usePostHog();
+  const signUpSnapPoints = useMemo(() => ['45%'], []);
+  // const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
+  const signUpSheetRef = useRef<BottomSheetModal>(null);
+  // const confirmOTPSheetRef = useRef<BottomSheetModal>(null);
+  const handleSignInPresentPress = useCallback(() => {
+    signUpSheetRef.current?.present();
+    posthog.capture('Sign Up Pressed');
+  }, []);
+
+  return (
+    <>
+      <TouchableOpacity
+        style={styles.button2}
+        onPress={() => {
+          handleSignInPresentPress();
+        }}>
+        <Text
+          style={{
+            color: theme.SECONDARY_COLOR,
+          }}>
+          Sign Up
+        </Text>
+      </TouchableOpacity>
       <BottomSheetModal
         backdropComponent={CustomBackdrop}
-        ref={confirmOTPSheetRef}
+        ref={signUpSheetRef}
         index={1}
-        snapPoints={confirmOTPSnapPoints}
+        snapPoints={signUpSnapPoints}
         enablePanDownToClose
         backgroundStyle={{
           backgroundColor: theme.PRIMARY_COLOR,
         }}
         handleIndicatorStyle={{
           backgroundColor: '#FAFAFA',
-        }}>
+        }}
+        keyboardBehavior={'interactive'}>
         <BottomSheetView>
-          <ConfirmOTPBottomSheetUI />
+          <SignUpBottomSheetUI onSubmit={() => {}} />
         </BottomSheetView>
       </BottomSheetModal>
     </>
@@ -137,18 +188,7 @@ export default function OnboardingScreen() {
                 }}>
                 <SignInButton />
 
-                <TouchableOpacity
-                  style={styles.button2}
-                  onPress={() => {
-                    handleSignUpPresentPress();
-                  }}>
-                  <Text
-                    style={{
-                      color: '#403958',
-                    }}>
-                    Sign Up
-                  </Text>
-                </TouchableOpacity>
+                <SignUpButton />
               </View>
               <View
                 style={{
@@ -187,29 +227,6 @@ export default function OnboardingScreen() {
               </View>
             </View>
           </SafeAreaView>
-
-          <BottomSheetModal
-            ref={signUpSheetRef}
-            // onChange={handleSheetChanges}
-            backdropComponent={CustomBackdrop}
-            index={1}
-            snapPoints={snapPoints}
-            enablePanDownToClose
-            backgroundStyle={{
-              backgroundColor: theme.PRIMARY_COLOR,
-            }}
-            handleIndicatorStyle={{
-              backgroundColor: '#FAFAFA',
-            }}
-            onChange={(index) => {
-              if (index === 0) {
-                signUpSheetRef.current?.forceClose();
-              }
-            }}>
-            <BottomSheetView>
-              <SignUp />
-            </BottomSheetView>
-          </BottomSheetModal>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </>
