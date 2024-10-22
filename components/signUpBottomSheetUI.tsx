@@ -7,6 +7,9 @@ import { z } from 'zod';
 
 import { phoneNumberRegex } from '@/shared/regex';
 import { theme } from '@/theme';
+import useAuthFlowStore from '@/stores/useAuthFlow';
+import { useRoute } from '@react-navigation/core';
+import { useRouter } from 'expo-router';
 
 interface SignUpProps {
   onSubmit: (username: string, password: string) => void;
@@ -17,6 +20,7 @@ const signUpSchema = z.object({
 });
 
 const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     reValidateMode: 'onChange',
@@ -24,6 +28,11 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
     defaultValues: {
       user: '',
     },
+  });
+  const authFlow = useAuthFlowStore((s) => s.signUpFlowStart);
+  const handleSubmit = form.handleSubmit((data) => {
+    authFlow(data.user);
+    router.push('/auth/confirm-otp');
   });
 
   return (
@@ -72,11 +81,7 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
         </BottomSheetView>
       </BottomSheetView>
       <BottomSheetView style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            onSubmit('test', 'test');
-          }}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text
             style={{
               color: '#FAFAFA',
@@ -85,21 +90,6 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
             Sign Up
           </Text>
         </TouchableOpacity>
-        {/*<Text*/}
-        {/*  style={{*/}
-        {/*    textAlign: 'center',*/}
-        {/*    color: '#403958',*/}
-        {/*    paddingHorizontal: 20,*/}
-        {/*  }}>*/}
-        {/*  Forgot your password?{' '}*/}
-        {/*  <Text*/}
-        {/*    style={{*/}
-        {/*      textDecorationLine: 'underline',*/}
-        {/*      color: '#403958',*/}
-        {/*    }}>*/}
-        {/*    Reset it here*/}
-        {/*  </Text>*/}
-        {/*</Text>*/}
       </BottomSheetView>
     </BottomSheetView>
   );

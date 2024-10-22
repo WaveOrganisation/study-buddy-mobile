@@ -5,14 +5,12 @@ import { OtpInput } from 'react-native-otp-entry';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '@/theme';
+import useAuthFlowStore from '@/stores/useAuthFlow';
+import { usePostHog } from 'posthog-react-native';
 
 const Page = () => {
-  const params = useGlobalSearchParams<{
-    user: string;
-    password: string;
-  }>();
+  const authFlow = useAuthFlowStore();
   const router = useRouter();
-  const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(59);
   const [isCodeResent, setIsCodeResent] = useState(false);
 
@@ -26,14 +24,15 @@ const Page = () => {
 
   // Function to handle OTP submission
   const handleOtpFilled = (enteredOtp: string) => {
-    setOtp(enteredOtp);
-
     if (enteredOtp === '123456') {
-      Alert.alert('Success', 'OTP verified successfully!');
+      // Alert.alert('Success', 'OTP verified successfully!');
 
-      // @TODO save session and shi
-
-      router.replace('/(authenticated)/home');
+      if (authFlow.redirectAfterOTPConfirm === 'home') {
+        router.replace('/home');
+      } else if (authFlow.redirectAfterOTPConfirm === 'sign-up-password-add') {
+      } else {
+        Alert.alert('There was an unexpected error');
+      }
     } else {
       Vibration.vibrate(500); // Vibrate on incorrect OTP
       Alert.alert('Error', 'Incorrect OTP. Please try again.');
