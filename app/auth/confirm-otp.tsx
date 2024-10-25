@@ -1,19 +1,24 @@
-import { useGlobalSearchParams, useRouter } from 'expo-router';
-import React, { useState, useEffect } from 'react';
+import { useGlobalSearchParams, useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Vibration, Alert } from 'react-native';
 import { OtpInput } from 'react-native-otp-entry';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '@/theme';
-import useAuthFlowStore from '@/stores/useAuthFlow';
 import { usePostHog } from 'posthog-react-native';
 
 const Page = () => {
-  const authFlow = useAuthFlowStore();
+  const paramsLocal = useLocalSearchParams<{
+    phoneNumber: string;
+    redirect: 'signup' | 'signin';
+  }>();
+
+  useEffect(() => {
+    console.log(paramsLocal);
+  }, []);
   const router = useRouter();
   const [timer, setTimer] = useState(59);
   const [isCodeResent, setIsCodeResent] = useState(false);
-
   // Timer for resend button
   useEffect(() => {
     if (timer > 0) {
@@ -27,9 +32,10 @@ const Page = () => {
     if (enteredOtp === '123456') {
       // Alert.alert('Success', 'OTP verified successfully!');
 
-      if (authFlow.redirectAfterOTPConfirm === 'home') {
+      if (paramsLocal.redirect == 'signin') {
         router.replace('/home');
-      } else if (authFlow.redirectAfterOTPConfirm === 'sign-up-password-add') {
+      } else if (paramsLocal.redirect === 'signup') {
+        router.replace(`/auth/fill-credentials?user=${paramsLocal.phoneNumber}`);
       } else {
         Alert.alert('There was an unexpected error');
       }
@@ -51,12 +57,13 @@ const Page = () => {
       <Text style={styles.titleText}>Verify Account</Text>
       <View style={styles.otpContainer}>
         <Text style={styles.otpText}>
-          We have sent you a 6-digit code by SMS. Please enter the code below to verify your
-          identity.
+          We have sent a 6-digit code via SMS to {paramsLocal.phoneNumber}. Please enter the code
+          below to verify your identity.
         </Text>
         <OtpInput
           focusColor={theme.SECONDARY_COLOR_LIGHT}
           autoFocus={false}
+          
           theme={{
             pinCodeContainerStyle: {
               borderColor: theme.SECONDARY_COLOR,

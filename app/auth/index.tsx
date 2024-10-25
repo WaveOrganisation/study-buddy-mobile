@@ -1,4 +1,9 @@
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView,
+  useBottomSheetModal,
+} from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
@@ -24,6 +29,21 @@ function SignInButton() {
     posthog.capture('Sign In Pressed');
   }, []);
   const router = useRouter();
+
+  const bottomSheet = useBottomSheetModal();
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // signInSheetRef.current?.forceClose();
+      bottomSheet.dismissAll();
+      return true;
+    });
+
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
+
   return (
     <>
       <TouchableOpacity
@@ -93,7 +113,19 @@ function SignUpButton() {
     signUpSheetRef.current?.present();
     posthog.capture('Sign Up Pressed');
   }, []);
+  const bottomSheet = useBottomSheetModal();
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // signInSheetRef.current?.forceClose();
+      bottomSheet.dismissAll();
+      return true;
+    });
+
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
   return (
     <>
       <TouchableOpacity
@@ -133,26 +165,6 @@ export default function OnboardingScreen() {
   const [loaded, error] = useFonts({
     'Londrina-Sketch': require('assets/fonts/LondrinaSketch-Regular.ttf'),
   });
-  const posthog = usePostHog();
-  const signUpSheetRef = useRef<BottomSheetModal>(null);
-
-  const snapPoints = useMemo(() => ['62%'], []);
-  const handleSignUpPresentPress = useCallback(() => {
-    signUpSheetRef.current?.present();
-    posthog.capture('Sign Up Pressed');
-  }, []);
-
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      // signInSheetRef.current?.forceClose();
-      signUpSheetRef.current?.forceClose();
-      return true;
-    });
-
-    return () => {
-      backHandler.remove();
-    };
-  }, []);
 
   return (
     <>

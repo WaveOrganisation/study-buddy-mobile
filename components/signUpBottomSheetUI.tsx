@@ -7,7 +7,6 @@ import { z } from 'zod';
 
 import { phoneNumberRegex } from '@/shared/regex';
 import { theme } from '@/theme';
-import useAuthFlowStore from '@/stores/useAuthFlow';
 import { useRoute } from '@react-navigation/core';
 import { useRouter } from 'expo-router';
 
@@ -29,10 +28,8 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
       user: '',
     },
   });
-  const authFlow = useAuthFlowStore((s) => s.signUpFlowStart);
   const handleSubmit = form.handleSubmit((data) => {
-    authFlow(data.user);
-    router.push('/auth/confirm-otp');
+    router.push(`/auth/confirm-otp?phoneNumber=${data.user}&redirect=signup`);
   });
 
   return (
@@ -54,7 +51,7 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
               return (
                 <BottomSheetTextInput
                   // autoFocus
-                  autoComplete="cc-number"
+                  autoComplete="tel"
                   placeholder="Mobile Number"
                   style={[
                     styles.input,
