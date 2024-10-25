@@ -1,5 +1,7 @@
 import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRoute } from '@react-navigation/core';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
@@ -7,8 +9,6 @@ import { z } from 'zod';
 
 import { phoneNumberRegex } from '@/shared/regex';
 import { theme } from '@/theme';
-import { useRoute } from '@react-navigation/core';
-import { useRouter } from 'expo-router';
 
 interface SignUpProps {
   onSubmit: (username: string, password: string) => void;
@@ -40,8 +40,7 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
       </Text>
       <BottomSheetView style={styles.inputsContainer}>
         <BottomSheetView style={styles.inputContainer}>
-          <Text
-            style={[styles.inputLabel, !!form.formState.errors['user'] ? { color: 'red' } : {}]}>
+          <Text style={[styles.inputLabel, form.formState.errors['user'] ? { color: 'red' } : {}]}>
             Mobile Number
           </Text>
           <Controller
@@ -55,7 +54,7 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
                   placeholder="Mobile Number"
                   style={[
                     styles.input,
-                    !!form.formState.errors['user'] ? { borderColor: 'red' } : {},
+                    form.formState.errors['user'] ? { borderColor: 'red' } : {},
                   ]}
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -64,13 +63,10 @@ const SignUpBottomSheetUI = ({ onSubmit }: SignUpProps) => {
                 />
               );
             }}
-            name={'user'}
+            name="user"
           />
           <Text
-            style={[
-              styles.inputHelperText,
-              !!form.formState.errors['user'] ? { color: 'red' } : {},
-            ]}>
+            style={[styles.inputHelperText, form.formState.errors['user'] ? { color: 'red' } : {}]}>
             {form.formState.errors['user']
               ? form.formState.errors['user'].message
               : 'Please enter your mobile number.'}

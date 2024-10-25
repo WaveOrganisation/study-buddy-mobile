@@ -1,12 +1,13 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
 import BottomSheet, {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
+import React, { useCallback, useMemo, useRef } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import CustomBackdrop from '@/components/CustomBackdrop';
 
 const Sheet = () => {
@@ -24,7 +25,7 @@ const Sheet = () => {
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
         <SafeAreaView>
-          <Button title={'Present Modal'} onPress={handlePresentModalPress} />
+          <Button title="Present Modal" onPress={handlePresentModalPress} />
         </SafeAreaView>
         <BottomSheetModal
           backdropComponent={CustomBackdrop}

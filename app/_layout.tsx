@@ -1,11 +1,10 @@
-import '../global.css';
-
-import { Stack } from 'expo-router';
-import { useColorScheme } from 'nativewind';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
+import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { PostHogProvider } from 'posthog-react-native';
 import { useEffect } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useColorScheme } from 'react-native';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -13,12 +12,23 @@ export const unstable_settings = {
 };
 const queryClient = new QueryClient();
 
+SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
-  const { setColorScheme, colorScheme } = useColorScheme();
-  // setColorScheme('light');
+  const colorScheme = useColorScheme();
+
+  const [fontLoaded] = useFonts({
+    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
+    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+  });
   useEffect(() => {
-    setColorScheme('light');
-  }, []);
+    if (fontLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontLoaded]);
+
+  if (!fontLoaded) {
+    return null;
+  }
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -27,7 +37,7 @@ export default function RootLayout() {
           options={{
             host: 'https://us.i.posthog.com',
           }}>
-          <StatusBar style={colorScheme == 'light' ? 'dark' : 'light'} />
+          <StatusBar style={colorScheme === 'light' ? 'dark' : 'light'} />
           <Stack>
             <Stack.Screen name="auth" options={{ headerShown: false }} />
             <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />

@@ -1,7 +1,8 @@
-import { IResponse } from '@/types/response';
-import { TRequest } from '@/types/request';
-import { API_URL } from '@/utils/const';
 import ky from 'ky';
+
+import { TRequest } from '@/types/request';
+import { IResponse } from '@/types/response';
+import { API_URL } from '@/utils/const';
 
 const defaultHeaders = {
   Accept: 'application/json',

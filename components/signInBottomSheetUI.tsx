@@ -1,9 +1,10 @@
+import Feather from '@expo/vector-icons/Feather';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { usePostHog } from 'posthog-react-native';
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
+
 import { theme } from '@/theme';
-import Feather from '@expo/vector-icons/Feather';
-import { usePostHog } from 'posthog-react-native';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
 interface SignInProps {
   onSubmit: (username: string, password: string) => void;
@@ -24,8 +25,8 @@ const SignInBottomSheetUI = ({ onSubmit }: SignInProps) => {
           <Text style={styles.inputLabel}>User</Text>
           <BottomSheetTextInput
             // autoFocus
-            autoComplete={'username'}
-            placeholder={'User'}
+            autoComplete="username"
+            placeholder="User"
             style={styles.input}
             placeholderTextColor={theme.SECONDARY_COLOR_LIGHT}
           />

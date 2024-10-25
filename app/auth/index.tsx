@@ -15,8 +15,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import CustomBackdrop from '@/components/CustomBackdrop';
 import SignInBottomSheetUI from '@/components/signInBottomSheetUI';
-import { theme } from '@/theme';
 import SignUpBottomSheetUI from '@/components/signUpBottomSheetUI';
+import { theme } from '@/theme';
 
 function SignInButton() {
   const posthog = usePostHog();
@@ -152,7 +152,7 @@ function SignUpButton() {
         handleIndicatorStyle={{
           backgroundColor: '#FAFAFA',
         }}
-        keyboardBehavior={'interactive'}>
+        keyboardBehavior="interactive">
         <BottomSheetView>
           <SignUpBottomSheetUI onSubmit={() => {}} />
         </BottomSheetView>
@@ -170,10 +170,8 @@ export default function OnboardingScreen() {
     <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
-          <SafeAreaView className="bg-[#9BCBC5]" style={{ height: '100%' }}>
-            <Text className="left-[50%] -translate-x-1/2" style={styles.titleText}>
-              StudyBuddy
-            </Text>
+          <SafeAreaView style={{ height: '100%', backgroundColor: theme.PRIMARY_COLOR }}>
+            <Text style={styles.titleText}>StudyBuddy</Text>
             <View style={styles.imageContainer}>
               <Image
                 source={require('assets/images/background-onboarding.png')}
@@ -204,15 +202,13 @@ export default function OnboardingScreen() {
               </View>
               <View
                 style={{
-                  position: 'absolute',
-                  width: '100%',
-                  bottom: '0%',
                   paddingHorizontal: 100,
                 }}>
                 <Text
                   style={{
                     textAlign: 'center',
                     color: '#403958',
+                    marginVertical: 20,
                   }}>
                   By Signing Up, you agree to our{' '}
                   <Text
@@ -249,12 +245,12 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 64,
     // fontWeight: 'bold',
-    position: 'absolute',
-    top: '12%',
     letterSpacing: 6,
     color: '#403958',
     textAlign: 'center',
     fontFamily: 'Londrina-Sketch',
+    marginBottom: -200,
+    marginTop: 40,
   },
   subtitleText: {
     // position: 'absolute',

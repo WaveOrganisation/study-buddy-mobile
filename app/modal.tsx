@@ -1,9 +1,9 @@
-import Typography from '@/components/ui/typography';
+import { Text } from 'react-native';
 
 export default function Modal() {
   return (
     <>
-      <Typography>Hello Niggers</Typography>
+      <Text>Hello Niggers</Text>
     </>
   );
 }

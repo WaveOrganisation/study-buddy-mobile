@@ -1,11 +1,11 @@
 import { useGlobalSearchParams, useLocalSearchParams, useRouter } from 'expo-router';
+import { usePostHog } from 'posthog-react-native';
 import React, { useState, useEffect, useMemo } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Vibration, Alert } from 'react-native';
 import { OtpInput } from 'react-native-otp-entry';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '@/theme';
-import { usePostHog } from 'posthog-react-native';
 
 const Page = () => {
   const paramsLocal = useLocalSearchParams<{
@@ -63,7 +63,6 @@ const Page = () => {
         <OtpInput
           focusColor={theme.SECONDARY_COLOR_LIGHT}
           autoFocus={false}
-          
           theme={{
             pinCodeContainerStyle: {
               borderColor: theme.SECONDARY_COLOR,
