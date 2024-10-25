@@ -17,6 +17,13 @@ export default function AuthLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="fill-credentials"
+        options={{
+          title: 'Auth',
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
