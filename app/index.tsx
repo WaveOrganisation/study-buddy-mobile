@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <Redirect href="/auth" />
+      <Redirect href="/auth/sheet" />
       {/*<View className="flex h-full items-center justify-center p-7 bg-white dark:bg-black">*/}
       {/*  <Paper className="p-5">*/}
       {/*    <Typography>INDEX FILE</Typography>*/}
