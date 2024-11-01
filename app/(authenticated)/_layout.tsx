@@ -1,6 +1,6 @@
-import { Stack, Tabs } from 'expo-router';
+import { Stack, Tabs } from "expo-router";
 
-import { TabBarIcon } from '@/components/TabBarIcon';
+import { TabBarIcon } from "@/components/TabBarIcon";
 
 export default function Layout() {
   return (
@@ -8,14 +8,14 @@ export default function Layout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: 'Home',
+          title: "Home",
           headerShown: false,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: "Profile",
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}

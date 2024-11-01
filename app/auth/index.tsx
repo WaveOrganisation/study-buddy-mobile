@@ -3,37 +3,37 @@ import {
   BottomSheetModalProvider,
   BottomSheetView,
   useBottomSheetModal,
-} from '@gorhom/bottom-sheet';
-import { useFonts } from 'expo-font';
-import { Image } from 'expo-image';
-import { useRouter } from 'expo-router';
-import { usePostHog } from 'posthog-react-native';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
+} from "@gorhom/bottom-sheet";
+import { useFonts } from "expo-font";
+import { Image } from "expo-image";
+import { useRouter } from "expo-router";
+import { usePostHog } from "posthog-react-native";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import CustomBackdrop from '@/components/CustomBackdrop';
-import SignInBottomSheetUI from '@/components/signInBottomSheetUI';
-import SignUpBottomSheetUI from '@/components/signUpBottomSheetUI';
-import { theme } from '@/theme';
+import CustomBackdrop from "@/components/CustomBackdrop";
+import SignInBottomSheetUI from "@/components/signInBottomSheetUI";
+import SignUpBottomSheetUI from "@/components/signUpBottomSheetUI";
+import { theme } from "@/theme";
 
 function SignInButton() {
   const posthog = usePostHog();
-  const signInSnapPoints = useMemo(() => ['62%'], []);
+  const signInSnapPoints = useMemo(() => ["62%"], []);
   // const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
   const signInSheetRef = useRef<BottomSheetModal>(null);
   // const confirmOTPSheetRef = useRef<BottomSheetModal>(null);
   const handleSignInPresentPress = useCallback(() => {
     signInSheetRef.current?.present();
-    posthog.capture('Sign In Pressed');
+    posthog.capture("Sign In Pressed");
   }, []);
   const router = useRouter();
 
   const bottomSheet = useBottomSheetModal();
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       // signInSheetRef.current?.forceClose();
       bottomSheet.dismissAll();
       return true;
@@ -53,7 +53,7 @@ function SignInButton() {
         }}>
         <Text
           style={{
-            color: '#FAFAFA',
+            color: "#FAFAFA",
           }}>
           Sign In
         </Text>
@@ -68,17 +68,17 @@ function SignInButton() {
           backgroundColor: theme.PRIMARY_COLOR,
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#FAFAFA',
+          backgroundColor: "#FAFAFA",
         }}>
         <BottomSheetView>
           <SignInBottomSheetUI
             onSubmit={() => {
               // confirmOTPSheetRef.current?.present();
               router.setParams({
-                LOGINPAGEuser: '052-574-4414',
-                LOGINPAGEpassword: 'testpw',
+                LOGINPAGEuser: "052-574-4414",
+                LOGINPAGEpassword: "testpw",
               });
-              router.replace('/auth/confirm-otp');
+              router.replace("/auth/confirm-otp");
             }}
           />
         </BottomSheetView>
@@ -105,18 +105,18 @@ function SignInButton() {
 function SignUpButton() {
   const router = useRouter();
   const posthog = usePostHog();
-  const signUpSnapPoints = useMemo(() => ['45%'], []);
+  const signUpSnapPoints = useMemo(() => ["45%"], []);
   // const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
   const signUpSheetRef = useRef<BottomSheetModal>(null);
   // const confirmOTPSheetRef = useRef<BottomSheetModal>(null);
   const handleSignInPresentPress = useCallback(() => {
     signUpSheetRef.current?.present();
-    posthog.capture('Sign Up Pressed');
+    posthog.capture("Sign Up Pressed");
   }, []);
   const bottomSheet = useBottomSheetModal();
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       // signInSheetRef.current?.forceClose();
       bottomSheet.dismissAll();
       return true;
@@ -150,7 +150,7 @@ function SignUpButton() {
           backgroundColor: theme.PRIMARY_COLOR,
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#FAFAFA',
+          backgroundColor: "#FAFAFA",
         }}
         keyboardBehavior="interactive">
         <BottomSheetView>
@@ -163,25 +163,25 @@ function SignUpButton() {
 
 export default function OnboardingScreen() {
   const [loaded, error] = useFonts({
-    'Londrina-Sketch': require('assets/fonts/LondrinaSketch-Regular.ttf'),
+    "Londrina-Sketch": require("assets/fonts/LondrinaSketch-Regular.ttf"),
   });
 
   return (
     <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
-          <SafeAreaView style={{ height: '100%', backgroundColor: theme.PRIMARY_COLOR }}>
+          <SafeAreaView style={{ height: "100%", backgroundColor: theme.PRIMARY_COLOR }}>
             <Text style={styles.titleText}>StudyBuddy</Text>
             <View style={styles.imageContainer}>
               <Image
-                source={require('assets/images/background-onboarding.png')}
+                source={require("assets/images/background-onboarding.png")}
                 style={styles.image}
                 contentFit="contain"
               />
               <View
                 style={{
-                  position: 'absolute',
-                  bottom: '25%',
+                  position: "absolute",
+                  bottom: "25%",
                 }}>
                 <Text style={styles.subtitleText}>
                   Study Buddy - Learning Made Simple, Fun, and Free!
@@ -189,10 +189,10 @@ export default function OnboardingScreen() {
               </View>
               <View
                 style={{
-                  position: 'absolute',
-                  width: '100%',
-                  bottom: '10%',
-                  display: 'flex',
+                  position: "absolute",
+                  width: "100%",
+                  bottom: "10%",
+                  display: "flex",
                   gap: 10,
                   paddingHorizontal: 20,
                 }}>
@@ -206,30 +206,30 @@ export default function OnboardingScreen() {
                 }}>
                 <Text
                   style={{
-                    textAlign: 'center',
-                    color: '#403958',
+                    textAlign: "center",
+                    color: "#403958",
                     marginVertical: 20,
                   }}>
-                  By Signing Up, you agree to our{' '}
+                  By Signing Up, you agree to our{" "}
                   <Text
                     style={{
-                      textDecorationLine: 'underline',
+                      textDecorationLine: "underline",
                     }}>
                     User Notice
-                  </Text>{' '}
-                  and{' '}
+                  </Text>{" "}
+                  and{" "}
                   <Text
                     style={{
-                      textDecorationLine: 'underline',
+                      textDecorationLine: "underline",
                     }}>
                     Privacy Policy
                   </Text>
-                  . {'\n\n'}
+                  . {"\n\n"}
                   <Text
                     style={{
-                      textDecorationLine: 'underline',
+                      textDecorationLine: "underline",
                     }}>
-                    Can't sign in or sign up?{' '}
+                    Can't sign in or sign up?{" "}
                   </Text>
                 </Text>
               </View>
@@ -246,47 +246,47 @@ const styles = StyleSheet.create({
     fontSize: 64,
     // fontWeight: 'bold',
     letterSpacing: 6,
-    color: '#403958',
-    textAlign: 'center',
-    fontFamily: 'Londrina-Sketch',
+    color: "#403958",
+    textAlign: "center",
+    fontFamily: "Londrina-Sketch",
     marginBottom: -200,
     marginTop: 40,
   },
   subtitleText: {
     // position: 'absolute',
-    fontWeight: 'bold',
-    color: '#403958',
-    textAlign: 'center',
+    fontWeight: "bold",
+    color: "#403958",
+    textAlign: "center",
     fontSize: 16,
   },
   image: {
-    width: '80%',
-    height: '90%',
+    width: "80%",
+    height: "90%",
     // backgroundColor: 'red',
   },
   imageContainer: {
     paddingHorizontal: 20,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   button: {
     padding: 12, // p-3 translates to padding: 12px (3 * 4px)
     borderRadius: 8, // rounded-md translates to border-radius: 8px
-    alignItems: 'center', // items-center aligns items to the center
-    borderColor: '#403958', // border-white
+    alignItems: "center", // items-center aligns items to the center
+    borderColor: "#403958", // border-white
     borderWidth: 0, // border-none
-    backgroundColor: '#403958', // bg-white
+    backgroundColor: "#403958", // bg-white
   },
   button2: {
     padding: 12, // p-3 translates to padding: 12px (3 * 4px)
     borderRadius: 8, // rounded-md translates to border-radius: 8px
-    alignItems: 'center', // items-center aligns items to the center
-    borderColor: '#403958', // border-white
+    alignItems: "center", // items-center aligns items to the center
+    borderColor: "#403958", // border-white
     borderWidth: 1, // border-none
-    backgroundColor: '#9BCBC5',
+    backgroundColor: "#9BCBC5",
   },
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
 });

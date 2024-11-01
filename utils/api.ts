@@ -1,15 +1,16 @@
-import ky from 'ky';
+import ky from "ky";
 
-import { TRequest } from '@/types/request';
-import { IResponse } from '@/types/response';
-import { API_URL } from '@/utils/const';
+import { TRequest } from "@/types/request";
+import { IResponse } from "@/types/response";
+import { API_URL } from "@/utils/const";
 
 const defaultHeaders = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
+  Accept: "application/json",
+  "Content-Type": "application/json",
+  locale: "he",
 };
 
-async function buildURL(path: TRequest['path'], queryParams?: TRequest['queryParams']) {
+async function buildURL(path: TRequest["path"], queryParams?: TRequest["queryParams"]) {
   const url = new URL(path, API_URL);
 
   if (queryParams) {
@@ -27,13 +28,6 @@ export default async function request<TResponseData>(
   const headers = { ...defaultHeaders, ...request.headers };
   const url = await buildURL(request.path, request.queryParams);
 
-  // const httpResponse = await fetch(url, {
-  //   method: request.method,
-  //   headers,
-  //   body,
-  // });
-  //
-  // const response = (await httpResponse.json()) as TResponseData;
   const response = await ky(url, {
     method: request.method,
     headers,

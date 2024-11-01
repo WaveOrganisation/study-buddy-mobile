@@ -1,16 +1,16 @@
-import { useGlobalSearchParams, useLocalSearchParams, useRouter } from 'expo-router';
-import { usePostHog } from 'posthog-react-native';
-import React, { useState, useEffect, useMemo } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Vibration, Alert } from 'react-native';
-import { OtpInput } from 'react-native-otp-entry';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useGlobalSearchParams, useLocalSearchParams, useRouter } from "expo-router";
+import { usePostHog } from "posthog-react-native";
+import React, { useState, useEffect, useMemo } from "react";
+import { Text, View, StyleSheet, TouchableOpacity, Vibration, Alert } from "react-native";
+import { OtpInput } from "react-native-otp-entry";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { theme } from '@/theme';
+import { theme } from "@/theme";
 
 const Page = () => {
   const paramsLocal = useLocalSearchParams<{
     phoneNumber: string;
-    redirect: 'signup' | 'signin';
+    redirect: "signup" | "signin";
   }>();
 
   useEffect(() => {
@@ -29,19 +29,19 @@ const Page = () => {
 
   // Function to handle OTP submission
   const handleOtpFilled = (enteredOtp: string) => {
-    if (enteredOtp === '123456') {
+    if (enteredOtp === "123456") {
       // Alert.alert('Success', 'OTP verified successfully!');
 
-      if (paramsLocal.redirect == 'signin') {
-        router.replace('/home');
-      } else if (paramsLocal.redirect === 'signup') {
+      if (paramsLocal.redirect == "signin") {
+        router.replace("/home");
+      } else if (paramsLocal.redirect === "signup") {
         router.replace(`/auth/fill-credentials?user=${paramsLocal.phoneNumber}`);
       } else {
-        Alert.alert('There was an unexpected error');
+        Alert.alert("There was an unexpected error");
       }
     } else {
       Vibration.vibrate(500); // Vibrate on incorrect OTP
-      Alert.alert('Error', 'Incorrect OTP. Please try again.');
+      Alert.alert("Error", "Incorrect OTP. Please try again.");
     }
   };
 
@@ -49,7 +49,7 @@ const Page = () => {
   const handleResendCode = () => {
     setIsCodeResent(true);
     setTimer(59);
-    Alert.alert('Code Resent', 'A new code has been sent to your phone.');
+    Alert.alert("Code Resent", "A new code has been sent to your phone.");
   };
 
   return (
@@ -83,10 +83,10 @@ const Page = () => {
             <Text
               style={{
                 fontSize: 16,
-                color: timer > 0 ? 'grey' : '#2d64f5',
-                cursor: 'pointer',
+                color: timer > 0 ? "grey" : "#2d64f5",
+                cursor: "pointer",
               }}>
-              {timer > 0 ? `Send the code again [${timer}s].` : 'Send the code again.'}
+              {timer > 0 ? `Send the code again [${timer}s].` : "Send the code again."}
             </Text>
           </TouchableOpacity>
         </View>
@@ -98,38 +98,38 @@ const Page = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.PRIMARY_COLOR,
-    height: '100%',
+    height: "100%",
     paddingHorizontal: 20,
     paddingTop: 60,
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
     gap: 32,
   },
   titleText: {
     fontSize: 36,
     letterSpacing: 2,
     color: theme.SECONDARY_COLOR,
-    textAlign: 'center',
+    textAlign: "center",
   },
   otpContainer: {
     paddingHorizontal: 20,
     backgroundColor: theme.PRIMARY_COLOR_DARK,
     paddingVertical: 40,
     borderRadius: 5,
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     gap: 40,
   },
   otpText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 20,
   },
   otpResendContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     gap: 4,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   otpSubtitle: {
     fontSize: 16,

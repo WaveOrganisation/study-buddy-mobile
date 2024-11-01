@@ -1,4 +1,4 @@
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, Stack } from "expo-router";
 
 export default function AuthLayout() {
   return (
@@ -6,21 +6,21 @@ export default function AuthLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Auth',
+          title: "Auth",
           headerShown: false,
         }}
       />
       <Stack.Screen
         name="confirm-otp"
         options={{
-          title: 'Auth',
+          title: "Auth",
           headerShown: false,
         }}
       />
       <Stack.Screen
         name="fill-credentials"
         options={{
-          title: 'Auth',
+          title: "Auth",
           headerShown: false,
         }}
       />

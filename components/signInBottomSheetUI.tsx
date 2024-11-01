@@ -1,10 +1,10 @@
-import Feather from '@expo/vector-icons/Feather';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { usePostHog } from 'posthog-react-native';
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
+import Feather from "@expo/vector-icons/Feather";
+import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
+import { usePostHog } from "posthog-react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, TextInput, Button, TouchableOpacity } from "react-native";
 
-import { theme } from '@/theme';
+import { theme } from "@/theme";
 
 interface SignInProps {
   onSubmit: (username: string, password: string) => void;
@@ -47,7 +47,7 @@ const SignInBottomSheetUI = ({ onSubmit }: SignInProps) => {
           <View style={styles.passwordIconContainer}>
             <Feather
               style={styles.passwordIcon}
-              name={showPassword ? 'eye-off' : 'eye'}
+              name={showPassword ? "eye-off" : "eye"}
               onPress={handleTogglePassword}
             />
           </View>
@@ -59,27 +59,27 @@ const SignInBottomSheetUI = ({ onSubmit }: SignInProps) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            onSubmit('test', 'test');
+            onSubmit("test", "test");
           }}>
           <Text
             style={{
-              color: '#FAFAFA',
-              fontWeight: 'semibold',
+              color: "#FAFAFA",
+              fontWeight: "semibold",
             }}>
             Sign In
           </Text>
         </TouchableOpacity>
         <Text
           style={{
-            textAlign: 'center',
-            color: '#403958',
+            textAlign: "center",
+            color: "#403958",
             paddingHorizontal: 20,
           }}>
-          Forgot your password?{' '}
+          Forgot your password?{" "}
           <Text
             style={{
-              textDecorationLine: 'underline',
-              color: '#403958',
+              textDecorationLine: "underline",
+              color: "#403958",
             }}>
             Reset it here
           </Text>
@@ -96,34 +96,34 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 44,
-    top: '12%',
+    top: "12%",
     letterSpacing: 4,
-    color: '#403958',
-    textAlign: 'center',
+    color: "#403958",
+    textAlign: "center",
     marginTop: -40,
     marginBottom: 40,
   },
   subtitleText: {
     fontSize: 20,
-    color: '#403958',
-    textAlign: 'center',
-    width: '80%',
-    marginHorizontal: 'auto',
+    color: "#403958",
+    textAlign: "center",
+    width: "80%",
+    marginHorizontal: "auto",
     marginVertical: 24,
   },
   inputsContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
     // paddingHorizontal: 10,
     gap: 20,
   },
   inputContainer: {
-    position: 'relative',
+    position: "relative",
   },
   inputLabel: {
     fontSize: 18,
     color: theme.SECONDARY_COLOR, // Dark text for label
     marginBottom: 5,
-    fontWeight: '600', // Semi-bold text
+    fontWeight: "600", // Semi-bold text
   },
   input: {
     borderColor: theme.SECONDARY_COLOR, // Light gray border
@@ -131,35 +131,35 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 12,
     fontSize: 16,
-    color: '#111827', // Dark gray text
+    color: "#111827", // Dark gray text
   },
   inputHelperText: {
     fontSize: 14,
-    color: '#6b7280', // Gray helper text
+    color: "#6b7280", // Gray helper text
     marginTop: 5,
     marginLeft: 10,
   },
   buttonContainer: {
     marginVertical: 20,
-    display: 'flex',
+    display: "flex",
     gap: 16,
   },
   button: {
     padding: 12, // p-3 translates to padding: 12px (3 * 4px)
     borderRadius: 8, // rounded-md translates to border-radius: 8px
-    alignItems: 'center', // items-center aligns items to the center
-    borderColor: '#403958', // border-white
+    alignItems: "center", // items-center aligns items to the center
+    borderColor: "#403958", // border-white
     borderWidth: 0, // border-none
-    backgroundColor: '#403958', // bg-white
+    backgroundColor: "#403958", // bg-white
   },
   passwordIconContainer: {
-    position: 'absolute',
+    position: "absolute",
     right: 14,
-    top: '50%',
+    top: "50%",
     transform: [{ translateY: -8 }],
   },
   passwordIcon: {
-    color: '#403958',
+    color: "#403958",
     fontSize: 22,
   },
 });

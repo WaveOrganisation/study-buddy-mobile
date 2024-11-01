@@ -1,7 +1,7 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { TSession } from '@/types/session';
-import { clearSession, getSession, setSession } from '@/utils/session';
+import { TSession } from "@/types/session";
+import { clearSession, getSession, setSession } from "@/utils/session";
 
 interface IAuthStore {
   session: TSession | null;

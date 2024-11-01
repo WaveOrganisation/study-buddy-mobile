@@ -1,7 +1,7 @@
-import useAuthStore from '@/stores/useAuthStore';
-import { TRequest } from '@/types/request';
-import { IResponse } from '@/types/response';
-import request from '@/utils/api';
+import useAuthStore from "@/stores/useAuthStore";
+import { TRequest } from "@/types/request";
+import { IResponse } from "@/types/response";
+import request from "@/utils/api";
 
 interface NotAuthenticated extends IResponse<undefined> {
   notAuthenticated: true;
