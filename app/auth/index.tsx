@@ -6,17 +6,17 @@ import {
 } from "@gorhom/bottom-sheet";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
-import { usePostHog } from "posthog-react-native";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
-import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { BackHandler, StyleSheet, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import CustomBackdrop from "@/components/CustomBackdrop";
+import { Button, H1, Text, View, YStack } from "tamagui";
+import { useRouter } from "expo-router";
+import { usePostHog } from "posthog-react-native";
 import SignInBottomSheetUI from "@/components/signInBottomSheetUI";
-import SignUpBottomSheetUI from "@/components/signUpBottomSheetUI";
 import { theme } from "@/theme";
+import CustomBackdrop from "@/components/CustomBackdrop";
 
 function SignInButton() {
   const posthog = usePostHog();
@@ -46,18 +46,9 @@ function SignInButton() {
 
   return (
     <>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          handleSignInPresentPress();
-        }}>
-        <Text
-          style={{
-            color: "#FAFAFA",
-          }}>
-          Sign In
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSignInPresentPress} themeInverse>
+        Sign In
+      </Button>
       <BottomSheetModal
         backdropComponent={CustomBackdrop}
         ref={signInSheetRef}
@@ -83,22 +74,6 @@ function SignInButton() {
           />
         </BottomSheetView>
       </BottomSheetModal>
-      {/*<BottomSheetModal*/}
-      {/*  backdropComponent={CustomBackdrop}*/}
-      {/*  ref={confirmOTPSheetRef}*/}
-      {/*  index={1}*/}
-      {/*  snapPoints={confirmOTPSnapPoints}*/}
-      {/*  enablePanDownToClose*/}
-      {/*  backgroundStyle={{*/}
-      {/*    backgroundColor: theme.PRIMARY_COLOR,*/}
-      {/*  }}*/}
-      {/*  handleIndicatorStyle={{*/}
-      {/*    backgroundColor: '#FAFAFA',*/}
-      {/*  }}>*/}
-      {/*  <BottomSheetView>*/}
-      {/*    <ConfirmOTPBottomSheetUI />*/}
-      {/*  </BottomSheetView>*/}
-      {/*</BottomSheetModal>*/}
     </>
   );
 }
@@ -162,78 +137,35 @@ function SignUpButton() {
 }
 
 export default function OnboardingScreen() {
-  const [loaded, error] = useFonts({
-    "Londrina-Sketch": require("assets/fonts/LondrinaSketch-Regular.ttf"),
-  });
-
   return (
     <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
-          <SafeAreaView style={{ height: "100%", backgroundColor: theme.PRIMARY_COLOR }}>
-            <Text style={styles.titleText}>StudyBuddy</Text>
-            <View style={styles.imageContainer}>
-              <Image
-                source={require("assets/images/background-onboarding.png")}
-                style={styles.image}
-                contentFit="contain"
-              />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: "25%",
-                }}>
-                <Text style={styles.subtitleText}>
-                  Study Buddy - Learning Made Simple, Fun, and Free!
-                </Text>
-              </View>
-              <View
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  bottom: "10%",
-                  display: "flex",
-                  gap: 10,
-                  paddingHorizontal: 20,
-                }}>
-                <SignInButton />
-
-                <SignUpButton />
-              </View>
-              <View
-                style={{
-                  paddingHorizontal: 100,
-                }}>
-                <Text
+          <SafeAreaView>
+            <YStack p={"$7"} gap={"$7"}>
+              <Text style={styles.titleText}>StudyBuddy</Text>
+              <View>
+                <Image
                   style={{
-                    textAlign: "center",
-                    color: "#403958",
-                    marginVertical: 20,
-                  }}>
-                  By Signing Up, you agree to our{" "}
-                  <Text
-                    style={{
-                      textDecorationLine: "underline",
-                    }}>
-                    User Notice
-                  </Text>{" "}
-                  and{" "}
-                  <Text
-                    style={{
-                      textDecorationLine: "underline",
-                    }}>
-                    Privacy Policy
-                  </Text>
-                  . {"\n\n"}
-                  <Text
-                    style={{
-                      textDecorationLine: "underline",
-                    }}>
-                    Can't sign in or sign up?{" "}
-                  </Text>
+                    width: "100%",
+                    height: 400,
+                  }}
+                  source={require("assets/images/background-onboarding-no-clouds.png")}
+                  contentFit="contain"></Image>
+              </View>
+              <YStack gap={"$3"}>
+                <SignInButton />
+                <Button borderColor={"black"}>Sign Up</Button>
+              </YStack>
+              <View>
+                <Text textAlign={"center"}>
+                  By Signing Up, you agree to our {"\n"}
+                  <Text textDecorationLine={"underline"}>User Notice</Text> and{" "}
+                  <Text textDecorationLine={"underline"}>Privacy Policy</Text>.{"\n\n"}
+                  <Text textDecorationLine={"underline"}>Can't sign in or sign up?</Text>
                 </Text>
               </View>
-            </View>
+            </YStack>
           </SafeAreaView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
@@ -244,49 +176,8 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   titleText: {
     fontSize: 64,
-    // fontWeight: 'bold',
     letterSpacing: 6,
-    color: "#403958",
     textAlign: "center",
     fontFamily: "Londrina-Sketch",
-    marginBottom: -200,
-    marginTop: 40,
-  },
-  subtitleText: {
-    // position: 'absolute',
-    fontWeight: "bold",
-    color: "#403958",
-    textAlign: "center",
-    fontSize: 16,
-  },
-  image: {
-    width: "80%",
-    height: "90%",
-    // backgroundColor: 'red',
-  },
-  imageContainer: {
-    paddingHorizontal: 20,
-    display: "flex",
-    alignItems: "center",
-  },
-  button: {
-    padding: 12, // p-3 translates to padding: 12px (3 * 4px)
-    borderRadius: 8, // rounded-md translates to border-radius: 8px
-    alignItems: "center", // items-center aligns items to the center
-    borderColor: "#403958", // border-white
-    borderWidth: 0, // border-none
-    backgroundColor: "#403958", // bg-white
-  },
-  button2: {
-    padding: 12, // p-3 translates to padding: 12px (3 * 4px)
-    borderRadius: 8, // rounded-md translates to border-radius: 8px
-    alignItems: "center", // items-center aligns items to the center
-    borderColor: "#403958", // border-white
-    borderWidth: 1, // border-none
-    backgroundColor: "#9BCBC5",
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
   },
 });

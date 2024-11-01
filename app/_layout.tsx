@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { PostHogProvider } from "posthog-react-native";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useColorScheme } from "react-native";
 import { TamaguiProvider, Theme } from "tamagui";
 import tamaguiConfig from "@/tamagui.config";
@@ -18,10 +18,17 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
-  const [fontLoaded] = useFonts({
+  const [fontLoadedInter] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
+  const [loaded, error] = useFonts({
+    "Londrina-Sketch": require("assets/fonts/LondrinaSketch-Regular.ttf"),
+  });
+  const fontLoaded = useMemo(() => {
+    return loaded && fontLoadedInter;
+  }, []);
+
   useEffect(() => {
     if (fontLoaded) {
       SplashScreen.hideAsync();
