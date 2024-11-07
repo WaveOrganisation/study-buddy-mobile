@@ -1,11 +1,11 @@
-import { useGlobalSearchParams, useLocalSearchParams, useRouter } from "expo-router";
-import { usePostHog } from "posthog-react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState, useEffect, useMemo } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Vibration, Alert } from "react-native";
-import { OtpInput } from "react-native-otp-entry";
+import { Vibration, Alert } from "react-native";
+import { Button, H1, H2, H3, H5, H6, Stack, Text, View, XStack, YStack } from "tamagui";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import { theme } from "@/theme";
+import { OtpInput } from "react-native-otp-entry";
+import { getTokens, getConfig } from "@tamagui/core";
+import { ArrowRight } from "@tamagui/lucide-icons";
 
 const Page = () => {
   const paramsLocal = useLocalSearchParams<{
@@ -51,90 +51,89 @@ const Page = () => {
     setTimer(59);
     Alert.alert("Code Resent", "A new code has been sent to your phone.");
   };
-
+  const tokens = getTokens();
+  console.log(tokens.color.$gray8Light.val);
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.titleText}>Verify Account</Text>
-      <View style={styles.otpContainer}>
-        <Text style={styles.otpText}>
-          We have sent a 6-digit code via SMS to {paramsLocal.phoneNumber}. Please enter the code
-          below to verify your identity.
-        </Text>
-        <OtpInput
-          focusColor={theme.SECONDARY_COLOR_LIGHT}
-          autoFocus={false}
-          theme={{
-            pinCodeContainerStyle: {
-              borderColor: theme.SECONDARY_COLOR,
-            },
-            focusStickStyle: {
-              borderColor: theme.SECONDARY_COLOR_LIGHT,
-            },
-          }}
-          onFilled={handleOtpFilled}
-        />
+    <SafeAreaView
+      style={{
+        backgroundColor: "white",
+        flex: 1,
+      }}>
+      <YStack py={"$10"} px={"$4"}>
+        <H1 textAlign={"center"}>Verify Your Number</H1>
+        <H5 textTransform={"none"} textAlign={"center"} color={"$colorHover"}>
+          We've sent a code to {paramsLocal.phoneNumber ?? "052 574 4414"}
+        </H5>
 
-        <View style={styles.otpResendContainer}>
-          <Text style={styles.otpSubtitle}>Didn't get the code?</Text>
-          <TouchableOpacity
-            style={styles.otpResendButton}
-            onPress={handleResendCode}
-            disabled={timer > 0}>
-            <Text
-              style={{
-                fontSize: 16,
-                color: timer > 0 ? "grey" : "#2d64f5",
-                cursor: "pointer",
-              }}>
-              {timer > 0 ? `Send the code again [${timer}s].` : "Send the code again."}
+        <YStack px={"$5"} my={"$5"} gap={"$3"}>
+          <Text>Enter 6-digit code.</Text>
+          <OtpInput
+            hideStick
+            theme={{
+              pinCodeContainerStyle: {
+                borderRadius: 5,
+                borderColor: tokens.color.$gray8Light.val,
+              },
+              focusStickStyle: {
+                borderColor: tokens.color.$gray8Dark.val,
+              },
+              focusedPinCodeContainerStyle: {
+                borderColor: tokens.color.$gray8Dark.val,
+              },
+            }}></OtpInput>
+
+          <XStack alignItems={"center"} display={"flex"} mx={"auto"} my={"$2.5"}>
+            <ArrowRight color={"$colorHover"} size={"$1"} />
+            <Text textAlign={"center"} color={"$colorHover"} fontSize={"$5"}>
+              Code will be verified automatically.
             </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+          </XStack>
+          {/*<XStack>*/}
+          {/*  <View h={"$1"} width={"100%"}></View>*/}
+          {/*  <Text color={"$colorHover"} textAlign={"center"}>*/}
+          {/*    Didn't receive the code?*/}
+          {/*  </Text>*/}
+          {/*  <View h={"$1"} width={"100%"}></View>*/}
+          {/*</XStack>*/}
+          <YStack gap="$4">
+            <Stack position="relative" height="$1">
+              <Stack
+                position="absolute"
+                left={0}
+                right={0}
+                top="50%"
+                height="$0.25"
+                backgroundColor="$gray8"
+              />
+              <XStack justifyContent="center" alignItems={"center"}>
+                <Text
+                  color="$gray11"
+                  fontSize="$2"
+                  backgroundColor="$background"
+                  paddingHorizontal="$2"
+                  mt={"$1"}>
+                  Didn't receive the code?
+                </Text>
+              </XStack>
+            </Stack>
+            <XStack justifyContent="center">
+              <Button
+                unstyled
+                onPress={() => console.log("Resend code")}
+                pressStyle={{ opacity: 0.7 }}>
+                <Text color="$color" fontSize="$5" fontWeight="600">
+                  Resend Code
+                </Text>
+              </Button>
+            </XStack>
+          </YStack>
+          {/*<Button themeInverse onPress={() => {}}>*/}
+          {/*  Submit*/}
+          {/*</Button>*/}
+        </YStack>
+      </YStack>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: theme.PRIMARY_COLOR,
-    height: "100%",
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    gap: 32,
-  },
-  titleText: {
-    fontSize: 36,
-    letterSpacing: 2,
-    color: theme.SECONDARY_COLOR,
-    textAlign: "center",
-  },
-  otpContainer: {
-    paddingHorizontal: 20,
-    backgroundColor: theme.PRIMARY_COLOR_DARK,
-    paddingVertical: 40,
-    borderRadius: 5,
-    display: "flex",
-    flexDirection: "column",
-    gap: 40,
-  },
-  otpText: {
-    textAlign: "center",
-    fontSize: 20,
-  },
-  otpResendContainer: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 4,
-    alignSelf: "center",
-  },
-  otpSubtitle: {
-    fontSize: 16,
-  },
-  otpResendButton: {},
-});
 
 export default Page;

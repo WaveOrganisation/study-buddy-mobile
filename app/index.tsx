@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <Redirect href="/auth" />
+      <Redirect href="/auth/confirm-otp" />
     </>
   );
 }

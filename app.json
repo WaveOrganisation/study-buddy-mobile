@@ -31,7 +31,7 @@
     "splash": {
       "image": "./assets/spv2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#9BCBC5"
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
