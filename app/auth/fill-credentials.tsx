@@ -60,21 +60,11 @@ const FillCredentials = () => {
           </XStack>
           <YStack gap="$1">
             <Label htmlFor="fullName">Full Name</Label>
-            <Input
-              id="fullName"
-              placeholder={"Shlomo Ben-Yosef"}
-              autoComplete={"name"}
-              color={theme.SECONDARY_COLOR}
-            />
+            <Input id="fullName" placeholder={"Shlomo Ben-Yosef"} autoComplete={"name"} />
           </YStack>
           <YStack gap="$1">
             <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              placeholder="yatochka"
-              autoComplete={"username-new"}
-              color={theme.SECONDARY_COLOR}
-            />
+            <Input id="username" placeholder="yatochka" autoComplete={"username-new"} />
           </YStack>
           <YStack gap="$1">
             <Label htmlFor="password">Password</Label>
@@ -83,7 +73,6 @@ const FillCredentials = () => {
               placeholder={"Think of a good one"}
               secureTextEntry
               autoComplete={"new-password"}
-              color={theme.SECONDARY_COLOR}
             />
           </YStack>
           <YStack gap="$1">
@@ -93,7 +82,6 @@ const FillCredentials = () => {
               placeholder={"Don't make mistakes!"}
               secureTextEntry
               autoComplete={"new-password"}
-              color={theme.SECONDARY_COLOR}
             />
           </YStack>
           <Button themeInverse size={"$3"} mt={"$4"}>
