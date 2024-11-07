@@ -14,21 +14,15 @@ export const unstable_settings = {
 };
 const queryClient = new QueryClient();
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
-  const [fontLoadedInter] = useFonts({
+  const [fontLoaded] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-  });
-  const [loaded, error] = useFonts({
     "Londrina-Sketch": require("assets/fonts/LondrinaSketch-Regular.ttf"),
   });
-  const fontLoaded = useMemo(() => {
-    return loaded && fontLoadedInter;
-  }, []);
-
   useEffect(() => {
     if (fontLoaded) {
       SplashScreen.hideAsync();

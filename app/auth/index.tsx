@@ -54,87 +54,72 @@ function SignInButton() {
         ref={signInSheetRef}
         index={1}
         snapPoints={signInSnapPoints}
-        enablePanDownToClose
-        backgroundStyle={{
-          backgroundColor: theme.PRIMARY_COLOR,
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: "#FAFAFA",
-        }}>
+        enablePanDownToClose>
         <BottomSheetView>
-          <SignInBottomSheetUI
-            onSubmit={() => {
-              // confirmOTPSheetRef.current?.present();
-              router.setParams({
-                LOGINPAGEuser: "052-574-4414",
-                LOGINPAGEpassword: "testpw",
-              });
-              router.replace("/auth/confirm-otp");
-            }}
-          />
+          <SignInBottomSheetUI />
         </BottomSheetView>
       </BottomSheetModal>
     </>
   );
 }
-function SignUpButton() {
-  const router = useRouter();
-  const posthog = usePostHog();
-  const signUpSnapPoints = useMemo(() => ["45%"], []);
-  // const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
-  const signUpSheetRef = useRef<BottomSheetModal>(null);
-  // const confirmOTPSheetRef = useRef<BottomSheetModal>(null);
-  const handleSignInPresentPress = useCallback(() => {
-    signUpSheetRef.current?.present();
-    posthog.capture("Sign Up Pressed");
-  }, []);
-  const bottomSheet = useBottomSheetModal();
-
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
-      // signInSheetRef.current?.forceClose();
-      bottomSheet.dismissAll();
-      return true;
-    });
-
-    return () => {
-      backHandler.remove();
-    };
-  }, []);
-  return (
-    <>
-      <TouchableOpacity
-        style={styles.button2}
-        onPress={() => {
-          handleSignInPresentPress();
-        }}>
-        <Text
-          style={{
-            color: theme.SECONDARY_COLOR,
-          }}>
-          Sign Up
-        </Text>
-      </TouchableOpacity>
-      <BottomSheetModal
-        backdropComponent={CustomBackdrop}
-        ref={signUpSheetRef}
-        index={1}
-        snapPoints={signUpSnapPoints}
-        enablePanDownToClose
-        backgroundStyle={{
-          backgroundColor: theme.PRIMARY_COLOR,
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: "#FAFAFA",
-        }}
-        keyboardBehavior="interactive">
-        <BottomSheetView>
-          <SignUpBottomSheetUI onSubmit={() => {}} />
-        </BottomSheetView>
-      </BottomSheetModal>
-    </>
-  );
-}
+// function SignUpButton() {
+//   const router = useRouter();
+//   const posthog = usePostHog();
+//   const signUpSnapPoints = useMemo(() => ["45%"], []);
+//   // const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
+//   const signUpSheetRef = useRef<BottomSheetModal>(null);
+//   // const confirmOTPSheetRef = useRef<BottomSheetModal>(null);
+//   const handleSignInPresentPress = useCallback(() => {
+//     signUpSheetRef.current?.present();
+//     posthog.capture("Sign Up Pressed");
+//   }, []);
+//   const bottomSheet = useBottomSheetModal();
+//
+//   useEffect(() => {
+//     const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+//       // signInSheetRef.current?.forceClose();
+//       bottomSheet.dismissAll();
+//       return true;
+//     });
+//
+//     return () => {
+//       backHandler.remove();
+//     };
+//   }, []);
+//   return (
+//     <>
+//       <TouchableOpacity
+//         style={styles.button2}
+//         onPress={() => {
+//           handleSignInPresentPress();
+//         }}>
+//         <Text
+//           style={{
+//             color: theme.SECONDARY_COLOR,
+//           }}>
+//           Sign Up
+//         </Text>
+//       </TouchableOpacity>
+//       <BottomSheetModal
+//         backdropComponent={CustomBackdrop}
+//         ref={signUpSheetRef}
+//         index={1}
+//         snapPoints={signUpSnapPoints}
+//         enablePanDownToClose
+//         backgroundStyle={{
+//           backgroundColor: theme.PRIMARY_COLOR,
+//         }}
+//         handleIndicatorStyle={{
+//           backgroundColor: "#FAFAFA",
+//         }}
+//         keyboardBehavior="interactive">
+//         <BottomSheetView>
+//           <SignUpBottomSheetUI onSubmit={() => {}} />
+//         </BottomSheetView>
+//       </BottomSheetModal>
+//     </>
+//   );
+// }
 
 export default function OnboardingScreen() {
   return (
@@ -155,6 +140,7 @@ export default function OnboardingScreen() {
               </View>
               <YStack gap={"$3"}>
                 <SignInButton />
+                {/*<Button borderColor={"black"}>Sign Up</Button>*/}
                 <Button borderColor={"black"}>Sign Up</Button>
               </YStack>
               <View>
@@ -175,7 +161,7 @@ export default function OnboardingScreen() {
 
 const styles = StyleSheet.create({
   titleText: {
-    fontSize: 64,
+    fontSize: 60,
     letterSpacing: 6,
     textAlign: "center",
     fontFamily: "Londrina-Sketch",
