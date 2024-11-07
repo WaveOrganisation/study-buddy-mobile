@@ -48,6 +48,7 @@ export default function RootLayout() {
                 <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
                 <Stack.Screen name="modal" options={{ presentation: "modal" }} />
                 <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="info" options={{ headerShown: false }} />
               </Stack>
             </PostHogProvider>
           </QueryClientProvider>
