@@ -12,7 +12,7 @@
       "android": {
         "buildType": "apk"
       }
-    },
+    },n
     "production": {
       "autoIncrement": true
     }

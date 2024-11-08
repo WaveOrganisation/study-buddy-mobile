@@ -24,6 +24,14 @@ export default function AuthLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="password-recovery"
+        options={{
+          presentation: "modal",
+          title: "Auth",
+          // headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

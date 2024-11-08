@@ -36,7 +36,7 @@ const SignInBottomSheetUI = () => {
     },
   });
   const handleSubmit = form.handleSubmit((data) => {
-    router.push(`/auth/confirm-otp?phoneNumber=${data.user}&redirect=signin`);
+    router.push(`/(authenticated)`);
   });
 
   return (
@@ -109,11 +109,11 @@ const SignInBottomSheetUI = () => {
         <Button themeInverse onPress={handleSubmit}>
           Sign In
         </Button>
-        <View>
+        <Link href={"/auth/password-recovery"} push asChild>
           <Text color={"$colorHover"} textDecorationLine={"underline"} textAlign={"center"}>
             Forgot your password?{" "}
           </Text>
-        </View>
+        </Link>
       </YStack>
     </View>
   );
