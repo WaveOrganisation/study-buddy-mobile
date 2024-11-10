@@ -19,10 +19,58 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { theme } from "@/theme";
 import { useLocalSearchParams } from "expo-router";
 import GestureGoBack from "@/components/gestureGoBack";
+import { z } from "zod";
+import {
+  hasDigit,
+  hasLowercase,
+  hasSpecialChar,
+  hasUppercase,
+  passwordRegex,
+} from "@/shared/regex";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LabelWithErrorState, InputWithErrorState, ControllerWithError } from "@/components/Input";
 
+const fillCredentialsSchema = z
+  .object({
+    username: z.string().min(1).max(52).includes("skibidi"),
+    fullName: z.string().min(1).max(52).includes("skibidi"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .max(64, "Password cannot exceed 64 characters")
+      .refine((val) => hasLowercase.test(val), {
+        message: "Password must contain at least one lowercase letter",
+      })
+      .refine((val) => hasUppercase.test(val), {
+        message: "Password must contain at least one uppercase letter",
+      })
+      .refine((val) => hasDigit.test(val), {
+        message: "Password must contain at least one digit",
+      })
+      .refine((val) => hasSpecialChar.test(val), {
+        message: "Password must contain at least one special character (@$!%*?&)",
+      }),
+    passwordConfirm: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: "Passwords do not match",
+    path: ["passwordConfirm"],
+  });
 const FillCredentials = () => {
   const params = useLocalSearchParams<{ user: string }>();
-  console.log(params);
+  const form = useForm<z.infer<typeof fillCredentialsSchema>>({
+    resolver: zodResolver(fillCredentialsSchema),
+    reValidateMode: "onChange",
+    mode: "all",
+    defaultValues: {
+      username: "",
+      fullName: "",
+      password: "",
+      passwordConfirm: "",
+    },
+  });
+
   return (
     <>
       <GestureGoBack />
@@ -59,33 +107,129 @@ const FillCredentials = () => {
               gap={"$2"}>
               <CheckCircle2 size={"$1"} color={"#4ad07b"} />
               <Text color={"$colorHover"} fontSize={"$3"}>
-                Phone number confirmed: {params.user.replaceAll(" ", "-")}
+                Phone number confirmed:{" "}
+                {!!params.user ? params.user.replaceAll(" ", "-") : "ERROR 404!"}
               </Text>
             </XStack>
             <YStack gap="$1">
-              <Label htmlFor="fullName">Full Name</Label>
-              <Input id="fullName" placeholder={"Shlomo Ben-Yosef"} autoComplete={"name"} />
-            </YStack>
-            <YStack gap="$1">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" placeholder="yatochka" autoComplete={"username-new"} />
-            </YStack>
-            <YStack gap="$1">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                placeholder={"Think of a good one"}
-                secureTextEntry
-                autoComplete={"new-password"}
+              {/*<Controller*/}
+              {/*  control={form.control}*/}
+              {/*  rules={{ required: true }}*/}
+              {/*  render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {*/}
+              {/*    return (*/}
+              {/*      <>*/}
+              {/*        <LabelWithErrorState error={invalid} htmlFor="fullName">*/}
+              {/*          Full Name*/}
+              {/*        </LabelWithErrorState>*/}
+              {/*        <InputWithErrorState*/}
+              {/*          id="fullName"*/}
+              {/*          placeholder={"Shlomo Ben-Yosef"}*/}
+              {/*          autoComplete={"name"}*/}
+              {/*          value={value}*/}
+              {/*          error={invalid}*/}
+              {/*          onChangeText={onChange}*/}
+              {/*          onBlur={onBlur}*/}
+              {/*        />*/}
+              {/*      </>*/}
+              {/*    );*/}
+              {/*  }}*/}
+              {/*  name={"fullName"}*/}
+              {/*/>*/}
+              <ControllerWithError
+                controlProps={{
+                  control: form.control,
+                  name: "fullName",
+                }}
+                labelProps={{}}
               />
             </YStack>
             <YStack gap="$1">
-              <Label htmlFor="passwordConfirm">Password Confirmation</Label>
-              <Input
-                id="passwordConfirm"
-                placeholder={"Don't make mistakes!"}
-                secureTextEntry
-                autoComplete={"new-password"}
+              {/*<Input id="username" placeholder="yatochka" autoComplete={"username-new"} />*/}
+              <Controller
+                render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {
+                  return (
+                    <>
+                      <LabelWithErrorState error={invalid} htmlFor="username">
+                        Username
+                      </LabelWithErrorState>
+                      <InputWithErrorState
+                        id="username"
+                        placeholder="yatochka"
+                        autoComplete={"username-new"}
+                        error={invalid}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                      />
+                    </>
+                  );
+                }}
+                name={"username"}
+                control={form.control}
+              />
+            </YStack>
+            <YStack gap="$1">
+              {/*<Label htmlFor="password">Password</Label>*/}
+              {/*<Input*/}
+              {/*  id="password"*/}
+              {/*  placeholder={"Think of a good one"}*/}
+              {/*  secureTextEntry*/}
+              {/*  autoComplete={"new-password"}*/}
+              {/*/>*/}
+              <Controller
+                render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {
+                  return (
+                    <>
+                      <LabelWithErrorState error={invalid} htmlFor="password">
+                        Password
+                      </LabelWithErrorState>
+                      <InputWithErrorState
+                        id="password"
+                        placeholder={"Think of a good one"}
+                        secureTextEntry
+                        autoComplete={"new-password"}
+                        error={invalid}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                      />
+                    </>
+                  );
+                }}
+                name={"password"}
+                control={form.control}
+              />
+            </YStack>
+            <YStack gap="$1">
+              {/*<Label htmlFor="passwordConfirm">Password Confirmation</Label>*/}
+              {/*<Input*/}
+              {/*  id="passwordConfirm"*/}
+              {/*  placeholder={"Don't make mistakes!"}*/}
+              {/*  secureTextEntry*/}
+              {/*  autoComplete={"new-password"}*/}
+              {/*/>*/}
+              <Controller
+                render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {
+                  return (
+                    <>
+                      <LabelWithErrorState error={invalid} htmlFor="passwordConfirm">
+                        Password Confirmation
+                      </LabelWithErrorState>
+                      <InputWithErrorState
+                        id="passwordConfirm"
+                        placeholder={"Don't make mistakes!"}
+                        secureTextEntry
+                        autoComplete={"new-password"}
+                        error={invalid}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                      />
+                    </>
+                  );
+                }}
+                name={"passwordConfirm"}
+                control={form.control}
               />
             </YStack>
             <Button themeInverse size={"$3"} mt={"$4"}>

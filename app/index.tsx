@@ -11,14 +11,14 @@ export default function Home() {
   if (isLoggedIn) {
     return (
       <>
-        <Redirect href="/home" />
+        <Redirect href="/(authenticated)" />
       </>
     );
   }
 
   return (
     <>
-      <Redirect href="/auth" />
+      <Redirect href="/auth/fill-credentials" />
     </>
   );
 }

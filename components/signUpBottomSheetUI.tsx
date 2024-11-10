@@ -51,6 +51,9 @@ const SignUpBottomSheetUI = () => {
                     onChangeText={onChange}
                     onBlur={onBlur}
                     borderColor={error ? "red" : "$borderColor"}
+                    focusStyle={{
+                      borderColor: error ? "$red10" : "$borderColorFocus",
+                    }}
                     id="user"
                     placeholder={"052 574 4414"}
                     autoComplete={"tel"}
