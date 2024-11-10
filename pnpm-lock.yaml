@@ -83,6 +83,12 @@ importers:
       expo-web-browser:
         specifier: ~13.0.3
         version: 13.0.3(expo@51.0.38(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8)))
+      i18next:
+        specifier: ^23.16.5
+        version: 23.16.5
+      install:
+        specifier: ^0.13.0
+        version: 0.13.0
       ky:
         specifier: ^1.7.2
         version: 1.7.2
@@ -98,6 +104,9 @@ importers:
       react-hook-form:
         specifier: ^7.53.1
         version: 7.53.1(react@18.2.0)
+      react-i18next:
+        specifier: ^15.1.1
+        version: 15.1.1(i18next@23.16.5)(react-dom@18.2.0(react@18.2.0))(react-native@0.74.1(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
       react-native:
         specifier: 0.74.1
         version: 0.74.1(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))(@types/react@18.2.79)(react@18.2.0)
@@ -3435,6 +3444,9 @@ packages:
     resolution: {integrity: sha512-aXpmwoOhRBrw6X3j0h5RloK4x1OzsxMPyxqIHyNfSe2pypkVTZFpEiRoSipPEPlMrh0HW/XsjkJ5WgnCirpNUw==}
     engines: {node: '>=10'}
 
+  html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+
   http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
@@ -3449,6 +3461,9 @@ packages:
 
   hyphenate-style-name@1.1.0:
     resolution: {integrity: sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==}
+
+  i18next@23.16.5:
+    resolution: {integrity: sha512-KTlhE3EP9x6pPTAW7dy0WKIhoCpfOGhRQlO+jttQLgzVaoOjWwBWramu7Pp0i+8wDNduuzXfe3kkVbzrKyrbTA==}
 
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -3490,6 +3505,10 @@ packages:
 
   inline-style-prefixer@6.0.4:
     resolution: {integrity: sha512-FwXmZC2zbeeS7NzGjJ6pAiqRhXR0ugUShSNb6GApMl6da0/XGc4MOJsoWAywia52EEWbXNSy0pzkwz/+Y+swSg==}
+
+  install@0.13.0:
+    resolution: {integrity: sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA==}
+    engines: {node: '>= 0.10'}
 
   internal-ip@4.3.0:
     resolution: {integrity: sha512-S1zBo1D6zcsyuC6PMmY5+55YMILQ9av8lotMx447Bq6SAgo/sDK6y6uUKmuYhW7eacnIhFfsPmCNYdDzsnnDCg==}
@@ -4599,6 +4618,19 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
 
+  react-i18next@15.1.1:
+    resolution: {integrity: sha512-R/Vg9wIli2P3FfeI8o1eNJUJue5LWpFsQePCHdQDmX0Co3zkr6kdT8gAseb/yGeWbNz1Txc4bKDQuZYsC0kQfw==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -5450,6 +5482,10 @@ packages:
 
   vlq@1.0.1:
     resolution: {integrity: sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==}
+
+  void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
 
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
@@ -10401,6 +10437,10 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
+  html-parse-stringify@3.0.1:
+    dependencies:
+      void-elements: 3.1.0
+
   http-errors@2.0.0:
     dependencies:
       depd: 2.0.0
@@ -10419,6 +10459,10 @@ snapshots:
   human-signals@2.1.0: {}
 
   hyphenate-style-name@1.1.0: {}
+
+  i18next@23.16.5:
+    dependencies:
+      '@babel/runtime': 7.25.7
 
   ieee754@1.2.1: {}
 
@@ -10455,6 +10499,8 @@ snapshots:
     dependencies:
       css-in-js-utils: 3.1.0
       fast-loops: 1.1.4
+
+  install@0.13.0: {}
 
   internal-ip@4.3.0:
     dependencies:
@@ -11620,6 +11666,16 @@ snapshots:
     dependencies:
       react: 18.2.0
 
+  react-i18next@15.1.1(i18next@23.16.5)(react-dom@18.2.0(react@18.2.0))(react-native@0.74.1(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@babel/runtime': 7.25.7
+      html-parse-stringify: 3.0.1
+      i18next: 23.16.5
+      react: 18.2.0
+    optionalDependencies:
+      react-dom: 18.2.0(react@18.2.0)
+      react-native: 0.74.1(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))(@types/react@18.2.79)(react@18.2.0)
+
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -12605,6 +12661,8 @@ snapshots:
   vary@1.1.2: {}
 
   vlq@1.0.1: {}
+
+  void-elements@3.1.0: {}
 
   walker@1.0.8:
     dependencies:

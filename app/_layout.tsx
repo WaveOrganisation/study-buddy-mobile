@@ -9,7 +9,7 @@ import { useColorScheme } from "react-native";
 import { TamaguiProvider, Theme } from "tamagui";
 import tamaguiConfig from "@/tamagui.config";
 import GestureGoBack from "@/components/gestureGoBack";
-
+import "../i18n/i18n";
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "index",

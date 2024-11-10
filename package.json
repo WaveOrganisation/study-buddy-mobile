@@ -12,7 +12,8 @@
     "prebuild": "expo prebuild",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" && prettier -c \"**/*.{js,jsx,ts,tsx,json}\"",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "typesafe-i18n": "typesafe-i18n"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
@@ -40,11 +41,14 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.4",
     "expo-web-browser": "~13.0.3",
+    "i18next": "^23.16.5",
+    "install": "^0.13.0",
     "ky": "^1.7.2",
     "posthog-react-native": "^3.3.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.53.1",
+    "react-i18next": "^15.1.1",
     "react-native": "0.74.1",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-otp-entry": "^1.7.2",

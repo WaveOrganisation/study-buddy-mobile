@@ -15,9 +15,9 @@ import { Button, H1, Text, View, YStack } from "tamagui";
 import { Link, useRouter } from "expo-router";
 import { usePostHog } from "posthog-react-native";
 import SignInBottomSheetUI from "@/components/signInBottomSheetUI";
-import { theme } from "@/theme";
 import CustomBackdrop from "@/components/CustomBackdrop";
 import SignUpBottomSheetUI from "@/components/signUpBottomSheetUI";
+import { useTranslation } from "react-i18next";
 
 function SignInButton() {
   const posthog = usePostHog();
@@ -107,13 +107,15 @@ function SignUpButton() {
 }
 
 export default function OnboardingScreen() {
+  const { t, i18n } = useTranslation();
+  console.log(i18n.language);
   return (
     <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <SafeAreaView>
             <YStack p={"$7"} gap={"$7"}>
-              <Text style={styles.titleText}>StudyBuddy</Text>
+              <Text style={styles.titleText}>{t("Welcome to React")}</Text>
               <View>
                 <Image
                   style={{
