@@ -7,12 +7,15 @@ import { z } from "zod";
 import { phoneNumberRegex } from "@/shared/regex";
 import { Button, H3, H5, View, YStack } from "tamagui";
 import { ControllerWithError } from "@/components/Input";
+import { useTranslation } from "react-i18next";
+import { phoneNumberString } from "@/shared/schema";
 
 const signUpSchema = z.object({
-  user: z.string().regex(phoneNumberRegex, "Please enter a valid phone number"),
+  user: phoneNumberString,
 });
 
 const SignUpBottomSheetUI = () => {
+  const { t } = useTranslation("pageOnboarding");
   const router = useRouter();
 
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -30,9 +33,9 @@ const SignUpBottomSheetUI = () => {
   return (
     <View py="$8" px={"$4"}>
       <View gap={"$1"}>
-        <H3 textAlign={"center"}>Create an account</H3>
+        <H3 textAlign={"center"}>{t("signUpSheetTitle")}</H3>
         <H5 color={"$colorHover"} textTransform={"none"} textAlign={"center"}>
-          We'll send a verification code to your phone number.
+          {t("signUpSheetMessage")}
         </H5>
       </View>
       <YStack my={"$5"} gap={"$4"}>
@@ -43,7 +46,7 @@ const SignUpBottomSheetUI = () => {
               name: "user",
             }}
             labelProps={{
-              label: "Phone Number",
+              label: t("phoneFieldLabel"),
             }}
             inputProps={{
               autoComplete: "tel",
@@ -53,7 +56,7 @@ const SignUpBottomSheetUI = () => {
           />
         </YStack>
         <Button themeInverse onPress={handleSubmit}>
-          Sign Up
+          {t("buttonSignUp")}
         </Button>
       </YStack>
     </View>

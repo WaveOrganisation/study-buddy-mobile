@@ -12,6 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ControllerWithError } from "@/components/Input";
 import { passwordString, phoneNumberOrUsernameString } from "@/shared/schema";
+import { useTranslation } from "react-i18next";
 
 const signInSchema = z.object({
   user: phoneNumberOrUsernameString,
@@ -19,6 +20,7 @@ const signInSchema = z.object({
 });
 
 const SignInBottomSheetUI = () => {
+  const { t } = useTranslation("pageOnboarding");
   const router = useRouter();
   const [user, setUser] = useState<string>("");
 
@@ -41,8 +43,10 @@ const SignInBottomSheetUI = () => {
   return (
     <View py="$8" px={"$4"}>
       <View gap={"$1"}>
-        <H3 textAlign={"center"}>Welcome Back!</H3>
-        <H5 textAlign={"center"}>Please enter your credentials to sign in your account.</H5>
+        <H3 textAlign={"center"}>{t("signInSheetTitle")}</H3>
+        <H5 textAlign={"center"} color={"$colorHover"} textTransform={"none"}>
+          {t("signInSheetMessage")}
+        </H5>
       </View>
       <YStack my={"$5"} gap={"$4"}>
         <YStack gap={"$1"}>
@@ -53,11 +57,11 @@ const SignInBottomSheetUI = () => {
                 name: "user",
               }}
               labelProps={{
-                label: "Username or Phone Number",
+                label: t("userFieldLabel"),
               }}
               inputProps={{
                 autoComplete: startsWithANumber ? "tel" : "username",
-                placeholder: "052 574 4414 (yatochka)",
+                placeholder: t("userFieldPlaceholder"),
                 id: "user",
               }}
             />
@@ -69,11 +73,11 @@ const SignInBottomSheetUI = () => {
                 name: "password",
               }}
               labelProps={{
-                label: "Password",
+                label: t("passwordFieldLabel"),
               }}
               inputProps={{
                 autoComplete: "password",
-                placeholder: "Your Very Secure Password",
+                placeholder: t("passwordFieldPlaceholder"),
                 secureTextEntry: true,
                 id: "password",
               }}
@@ -81,11 +85,11 @@ const SignInBottomSheetUI = () => {
           </YStack>
         </YStack>
         <Button themeInverse onPress={handleSubmit}>
-          Sign In
+          {t("buttonSignIn")}
         </Button>
         <Link href={"/auth/password-recovery"} push asChild>
           <Text color={"$colorHover"} textDecorationLine={"underline"} textAlign={"center"}>
-            Forgot your password?{" "}
+            {t("forgotPassword")}{" "}
           </Text>
         </Link>
       </YStack>

@@ -39,13 +39,13 @@ export const passwordString = z
     message: passwordContainsSpecialChar,
   });
 
-export const phoneNumberOrUsernameString = z
+export const phoneNumberString = z
   .string()
-  .regex(phoneNumberRegex, i18next.t("phoneOrUsername", { ns: "validation" }))
-  .or(
-    z
-      .string()
-      .min(3, i18next.t("minLength", { ns: "validation", length: 3 }))
-      .max(20, i18next.t("maxLength", { ns: "validation", length: 20 }))
-      .regex(usernameRegex, i18next.t("phoneOrUsername", { ns: "validation" }))
-  );
+  .regex(phoneNumberRegex, i18next.t("phone", { ns: "validation" }));
+export const phoneNumberOrUsernameString = phoneNumberString.or(
+  z
+    .string()
+    .min(3, i18next.t("minLength", { ns: "validation", length: 3 }))
+    .max(20, i18next.t("maxLength", { ns: "validation", length: 20 }))
+    .regex(usernameRegex, i18next.t("phoneOrUsername", { ns: "validation" }))
+);
