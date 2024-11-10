@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
@@ -7,6 +8,7 @@ import { useEffect, useMemo } from "react";
 import { useColorScheme } from "react-native";
 import { TamaguiProvider, Theme } from "tamagui";
 import tamaguiConfig from "@/tamagui.config";
+import GestureGoBack from "@/components/gestureGoBack";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.

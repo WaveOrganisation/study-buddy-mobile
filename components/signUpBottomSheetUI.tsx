@@ -30,8 +30,10 @@ const SignUpBottomSheetUI = () => {
   return (
     <View py="$8" px={"$4"}>
       <View gap={"$1"}>
-        <H3 textAlign={"center"}>Welcome Back!</H3>
-        <H5 textAlign={"center"}>Please enter your credentials to sign in your account.</H5>
+        <H3 textAlign={"center"}>Create an account</H3>
+        <H5 color={"$colorHover"} textTransform={"none"} textAlign={"center"}>
+          We'll send a verification code to your phone number.
+        </H5>
       </View>
       <YStack my={"$5"} gap={"$4"}>
         <YStack gap="$1">

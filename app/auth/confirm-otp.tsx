@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { OtpInput } from "react-native-otp-entry";
 import { getTokens, getConfig } from "@tamagui/core";
 import { ArrowRight } from "@tamagui/lucide-icons";
+import GestureGoBack from "@/components/gestureGoBack";
 
 const Page = () => {
   const paramsLocal = useLocalSearchParams<{
@@ -54,85 +55,78 @@ const Page = () => {
   const tokens = getTokens();
   console.log(tokens.color.$gray8Light.val);
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: "white",
-        flex: 1,
-      }}>
-      <YStack py={"$10"} px={"$4"}>
-        <H1 textAlign={"center"}>Verify Your Number</H1>
-        <H5 textTransform={"none"} textAlign={"center"} color={"$colorHover"}>
-          We've sent a code to {paramsLocal.phoneNumber ?? "052 574 4414"}
-        </H5>
+    <>
+      <GestureGoBack />
+      <SafeAreaView
+        style={{
+          backgroundColor: "white",
+          flex: 1,
+        }}>
+        <YStack py={"$10"} px={"$4"}>
+          <H1 textAlign={"center"}>Verify Your Number</H1>
+          <H5 textTransform={"none"} textAlign={"center"} color={"$colorHover"}>
+            We've sent a code to {paramsLocal.phoneNumber ?? "052 574 4414"}
+          </H5>
 
-        <YStack px={"$5"} my={"$5"} gap={"$3"}>
-          <Text>Enter 6-digit code.</Text>
-          <OtpInput
-            hideStick
-            theme={{
-              pinCodeContainerStyle: {
-                borderRadius: 5,
-                borderColor: tokens.color.$gray8Light.val,
-              },
-              focusStickStyle: {
-                borderColor: tokens.color.$gray8Dark.val,
-              },
-              focusedPinCodeContainerStyle: {
-                borderColor: tokens.color.$gray8Dark.val,
-              },
-            }}></OtpInput>
+          <YStack px={"$5"} my={"$5"} gap={"$3"}>
+            <Text>Enter 6-digit code.</Text>
+            <OtpInput
+              hideStick
+              theme={{
+                pinCodeContainerStyle: {
+                  borderRadius: 5,
+                  borderColor: tokens.color.$gray8Light.val,
+                },
+                focusStickStyle: {
+                  borderColor: tokens.color.$gray8Dark.val,
+                },
+                focusedPinCodeContainerStyle: {
+                  borderColor: tokens.color.$gray8Dark.val,
+                },
+              }}></OtpInput>
 
-          <XStack alignItems={"center"} display={"flex"} mx={"auto"} my={"$2.5"}>
-            <ArrowRight color={"$colorHover"} size={"$1"} />
-            <Text textAlign={"center"} color={"$colorHover"} fontSize={"$5"}>
-              Code will be verified automatically.
-            </Text>
-          </XStack>
-          {/*<XStack>*/}
-          {/*  <View h={"$1"} width={"100%"}></View>*/}
-          {/*  <Text color={"$colorHover"} textAlign={"center"}>*/}
-          {/*    Didn't receive the code?*/}
-          {/*  </Text>*/}
-          {/*  <View h={"$1"} width={"100%"}></View>*/}
-          {/*</XStack>*/}
-          <YStack gap="$4">
-            <Stack position="relative" height="$1">
-              <Stack
-                position="absolute"
-                left={0}
-                right={0}
-                top="50%"
-                height="$0.25"
-                backgroundColor="$gray8"
-              />
-              <XStack justifyContent="center" alignItems={"center"}>
-                <Text
-                  color="$gray11"
-                  fontSize="$2"
-                  backgroundColor="$background"
-                  paddingHorizontal="$2"
-                  mt={"$1"}>
-                  Didn't receive the code?
-                </Text>
-              </XStack>
-            </Stack>
-            <XStack justifyContent="center">
-              <Button
-                unstyled
-                onPress={() => console.log("Resend code")}
-                pressStyle={{ opacity: 0.7 }}>
-                <Text color="$color" fontSize="$5" fontWeight="600">
-                  Resend Code
-                </Text>
-              </Button>
+            <XStack alignItems={"center"} display={"flex"} mx={"auto"} my={"$2.5"}>
+              <ArrowRight color={"$colorHover"} size={"$1"} />
+              <Text textAlign={"center"} color={"$colorHover"} fontSize={"$5"}>
+                Code will be verified automatically.
+              </Text>
             </XStack>
+            <YStack gap="$4">
+              <Stack position="relative" height="$1">
+                <Stack
+                  position="absolute"
+                  left={0}
+                  right={0}
+                  top="50%"
+                  height="$0.25"
+                  backgroundColor="$gray8"
+                />
+                <XStack justifyContent="center" alignItems={"center"}>
+                  <Text
+                    color="$gray11"
+                    fontSize="$2"
+                    backgroundColor="$background"
+                    paddingHorizontal="$2"
+                    mt={"$1"}>
+                    Didn't receive the code?
+                  </Text>
+                </XStack>
+              </Stack>
+              <XStack justifyContent="center">
+                <Button
+                  unstyled
+                  onPress={() => console.log("Resend code")}
+                  pressStyle={{ opacity: 0.7 }}>
+                  <Text color="$color" fontSize="$5" fontWeight="600">
+                    Resend Code
+                  </Text>
+                </Button>
+              </XStack>
+            </YStack>
           </YStack>
-          {/*<Button themeInverse onPress={() => {}}>*/}
-          {/*  Submit*/}
-          {/*</Button>*/}
         </YStack>
-      </YStack>
-    </SafeAreaView>
+      </SafeAreaView>
+    </>
   );
 };
 

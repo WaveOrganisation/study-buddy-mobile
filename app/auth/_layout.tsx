@@ -7,20 +7,23 @@ export default function AuthLayout() {
         name="index"
         options={{
           title: "Auth",
+          gestureEnabled: true,
           headerShown: false,
         }}
       />
       <Stack.Screen
         name="confirm-otp"
         options={{
-          title: "Auth",
-          headerShown: false,
+          title: "Confirm Your Phone Number",
+          headerShown: true,
+          gestureEnabled: true,
         }}
       />
       <Stack.Screen
         name="fill-credentials"
         options={{
           title: "Auth",
+          gestureEnabled: true,
           headerShown: false,
         }}
       />
@@ -28,6 +31,7 @@ export default function AuthLayout() {
         name="password-recovery"
         options={{
           presentation: "modal",
+          gestureEnabled: true,
           title: "Auth",
           // headerShown: false,
         }}
