@@ -1,5 +1,5 @@
-ghimport { Text } from 'react-native';
-import React from 'react';
+import React from "react";
+import { Text } from "react-native";
 
 interface ConfirmOTPBottomSheetUI {
   onSubmit: (code: string) => void;

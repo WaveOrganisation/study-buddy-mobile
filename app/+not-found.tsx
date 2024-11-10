@@ -1,24 +1,14 @@
-import { Link, Stack } from 'expo-router';
-
-import { Text, View } from 'react-native';
+import { Link, Stack } from "expo-router";
+import { H2, Text, View } from "tamagui";
 
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View className={styles.container}>
-        <Text className={styles.title}>This screen doesn't exist.</Text>
-        <Link href="/" className={styles.link}>
-          <Text className={styles.linkText}>Go to home screen!</Text>
-        </Link>
+      <Stack.Screen options={{ title: "Oops!" }} />
+      <View flex={1} justifyContent={"center"} alignItems={"center"}>
+        <H2 textAlign={"center"}>Ooops! Page not found</H2>
+        <Text textAlign={"center"}>The page you are looking for does not exist.</Text>
       </View>
     </>
   );
 }
-
-const styles = {
-  container: `items-center flex-1 justify-center p-5`,
-  title: `text-xl font-bold`,
-  link: `mt-4 pt-4`,
-  linkText: `text-base text-[#2e78b7]`,
-};

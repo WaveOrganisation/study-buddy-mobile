@@ -1,57 +1,56 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import BottomSheet, {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import CustomBackdrop from '@/components/CustomBackdrop';
+import { AlertDialog, Button, XStack, YStack } from "tamagui";
+import { Platform } from "react-native";
 
-const Sheet = () => {
-  // ref
-
-  // callbacks
-
-  const snapPoints = useMemo(() => ['45%'], []);
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetRef.current?.present();
-  }, []);
-  // renders
+export default function AlertDialogDemo() {
   return (
-    <GestureHandlerRootView>
-      <BottomSheetModalProvider>
-        <SafeAreaView>
-          <Button title={'Present Modal'} onPress={handlePresentModalPress} />
-        </SafeAreaView>
-        <BottomSheetModal
-          backdropComponent={CustomBackdrop}
-          ref={bottomSheetRef}
-          // onChange={handleSheetChanges}
-          index={1}
-          snapPoints={snapPoints}
-          enablePanDownToClose>
-          <BottomSheetView>
-            <Text>Awesome 🎉</Text>
-          </BottomSheetView>
-        </BottomSheetModal>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+    <AlertDialog native={Platform.OS === "ios" || Platform.OS === "macos"}>
+      <AlertDialog.Trigger asChild>
+        <Button>Show Alert</Button>
+      </AlertDialog.Trigger>
+
+      <AlertDialog.Portal>
+        <AlertDialog.Overlay
+          key="overlay"
+          animation="quick"
+          opacity={0.5}
+          enterStyle={{ opacity: 0 }}
+          exitStyle={{ opacity: 0 }}
+        />
+        <AlertDialog.Content
+          bordered
+          elevate
+          key="content"
+          animation={[
+            "quick",
+            {
+              opacity: {
+                overshootClamping: true,
+              },
+            },
+          ]}
+          enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
+          exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
+          x={0}
+          scale={1}
+          opacity={1}
+          y={0}>
+          <YStack space>
+            <AlertDialog.Title>Accept</AlertDialog.Title>
+            <AlertDialog.Description>
+              By pressing yes, you accept our terms and conditions.
+            </AlertDialog.Description>
+
+            <XStack gap="$3" justifyContent="flex-end">
+              <AlertDialog.Cancel asChild>
+                <Button>Cancel</Button>
+              </AlertDialog.Cancel>
+              <AlertDialog.Action asChild>
+                <Button theme="active">Accept</Button>
+              </AlertDialog.Action>
+            </XStack>
+          </YStack>
+        </AlertDialog.Content>
+      </AlertDialog.Portal>
+    </AlertDialog>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: 'grey',
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-});
-
-export default Sheet;
+}
