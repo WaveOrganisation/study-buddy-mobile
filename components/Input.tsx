@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text } from "tamagui";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Input, InputProps, Label, LabelProps } from "tamagui";
 import { Controller, ControllerProps } from "react-hook-form";
@@ -67,7 +67,9 @@ const ControllerWithError = ({
         render={({ field: { onChange, onBlur, value }, fieldState: { invalid, error } }) => {
           return (
             <>
-              <LabelWithErrorState error={invalid} {...labelProps} />
+              <LabelWithErrorState error={invalid} htmlFor={inputProps.id} {...labelProps}>
+                {labelProps.label}
+              </LabelWithErrorState>
               <InputWithErrorState
                 {...inputProps}
                 error={invalid}
@@ -75,7 +77,15 @@ const ControllerWithError = ({
                 onBlur={onBlur}
                 value={value}
               />
-              {invalid && <Text>{error?.message}</Text>}
+              {invalid ? (
+                <Text ml={"$3"} color={errorColor}>
+                  {error?.message}
+                </Text>
+              ) : (
+                <Text ml={"$3"} color={"$colorHover"} opacity={0}>
+                  Easter egg: This is a placeholder for a validation message
+                </Text>
+              )}
             </>
           );
         }}

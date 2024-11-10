@@ -89,7 +89,7 @@ const FillCredentials = () => {
               Enter your details to complete registration
             </H6>
           </YStack>
-          <YStack gap={"$3"} mt={"$5"}>
+          <YStack mt={"$5"}>
             {/*<div className="mb-6 p-3 bg-green-50 border border-green-200 rounded-md flex items-center">*/}
             {/*  <CheckCircle2 className="w-5 h-5 text-green-500 mr-2"/>*/}
             {/*  <p className="text-sm text-green-700">*/}
@@ -140,32 +140,53 @@ const FillCredentials = () => {
                   control: form.control,
                   name: "fullName",
                 }}
-                labelProps={{}}
+                labelProps={{
+                  label: "Full Name",
+                }}
+                inputProps={{
+                  autoComplete: "name",
+                  placeholder: "Shlomo Ben-Yosef",
+                  id: "fullName",
+                }}
               />
             </YStack>
             <YStack gap="$1">
               {/*<Input id="username" placeholder="yatochka" autoComplete={"username-new"} />*/}
-              <Controller
-                render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {
-                  return (
-                    <>
-                      <LabelWithErrorState error={invalid} htmlFor="username">
-                        Username
-                      </LabelWithErrorState>
-                      <InputWithErrorState
-                        id="username"
-                        placeholder="yatochka"
-                        autoComplete={"username-new"}
-                        error={invalid}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                      />
-                    </>
-                  );
+              {/*<Controller*/}
+              {/*  render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {*/}
+              {/*    return (*/}
+              {/*      <>*/}
+              {/*        <LabelWithErrorState error={invalid} htmlFor="username">*/}
+              {/*          Username*/}
+              {/*        </LabelWithErrorState>*/}
+              {/*        <InputWithErrorState*/}
+              {/*          id="username"*/}
+              {/*          placeholder="yatochka"*/}
+              {/*          autoComplete={"username-new"}*/}
+              {/*          error={invalid}*/}
+              {/*          onChangeText={onChange}*/}
+              {/*          onBlur={onBlur}*/}
+              {/*          value={value}*/}
+              {/*        />*/}
+              {/*      </>*/}
+              {/*    );*/}
+              {/*  }}*/}
+              {/*  name={"username"}*/}
+              {/*  control={form.control}*/}
+              {/*/>*/}
+              <ControllerWithError
+                controlProps={{
+                  control: form.control,
+                  name: "username",
                 }}
-                name={"username"}
-                control={form.control}
+                labelProps={{
+                  label: "Username",
+                }}
+                inputProps={{
+                  autoComplete: "username-new",
+                  placeholder: "yatochka",
+                  id: "username",
+                }}
               />
             </YStack>
             <YStack gap="$1">
@@ -176,28 +197,43 @@ const FillCredentials = () => {
               {/*  secureTextEntry*/}
               {/*  autoComplete={"new-password"}*/}
               {/*/>*/}
-              <Controller
-                render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {
-                  return (
-                    <>
-                      <LabelWithErrorState error={invalid} htmlFor="password">
-                        Password
-                      </LabelWithErrorState>
-                      <InputWithErrorState
-                        id="password"
-                        placeholder={"Think of a good one"}
-                        secureTextEntry
-                        autoComplete={"new-password"}
-                        error={invalid}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                      />
-                    </>
-                  );
+              {/*<Controller*/}
+              {/*  render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {*/}
+              {/*    return (*/}
+              {/*      <>*/}
+              {/*        <LabelWithErrorState error={invalid} htmlFor="password">*/}
+              {/*          Password*/}
+              {/*        </LabelWithErrorState>*/}
+              {/*        <InputWithErrorState*/}
+              {/*          id="password"*/}
+              {/*          placeholder={"Think of a good one"}*/}
+              {/*          secureTextEntry*/}
+              {/*          autoComplete={"new-password"}*/}
+              {/*          error={invalid}*/}
+              {/*          onChangeText={onChange}*/}
+              {/*          onBlur={onBlur}*/}
+              {/*          value={value}*/}
+              {/*        />*/}
+              {/*      </>*/}
+              {/*    );*/}
+              {/*  }}*/}
+              {/*  name={"password"}*/}
+              {/*  control={form.control}*/}
+              {/*/>*/}
+              <ControllerWithError
+                controlProps={{
+                  control: form.control,
+                  name: "password",
                 }}
-                name={"password"}
-                control={form.control}
+                labelProps={{
+                  label: "Password",
+                }}
+                inputProps={{
+                  autoComplete: "new-password",
+                  placeholder: "Think of a good one",
+                  secureTextEntry: true,
+                  id: "password",
+                }}
               />
             </YStack>
             <YStack gap="$1">
@@ -208,28 +244,43 @@ const FillCredentials = () => {
               {/*  secureTextEntry*/}
               {/*  autoComplete={"new-password"}*/}
               {/*/>*/}
-              <Controller
-                render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {
-                  return (
-                    <>
-                      <LabelWithErrorState error={invalid} htmlFor="passwordConfirm">
-                        Password Confirmation
-                      </LabelWithErrorState>
-                      <InputWithErrorState
-                        id="passwordConfirm"
-                        placeholder={"Don't make mistakes!"}
-                        secureTextEntry
-                        autoComplete={"new-password"}
-                        error={invalid}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                      />
-                    </>
-                  );
+              {/*<Controller*/}
+              {/*  render={({ field: { onChange, onBlur, value }, fieldState: { invalid } }) => {*/}
+              {/*    return (*/}
+              {/*      <>*/}
+              {/*        <LabelWithErrorState error={invalid} htmlFor="passwordConfirm">*/}
+              {/*          Password Confirmation*/}
+              {/*        </LabelWithErrorState>*/}
+              {/*        <InputWithErrorState*/}
+              {/*          id="passwordConfirm"*/}
+              {/*          placeholder={"Don't make mistakes!"}*/}
+              {/*          secureTextEntry*/}
+              {/*          autoComplete={"new-password"}*/}
+              {/*          error={invalid}*/}
+              {/*          onChangeText={onChange}*/}
+              {/*          onBlur={onBlur}*/}
+              {/*          value={value}*/}
+              {/*        />*/}
+              {/*      </>*/}
+              {/*    );*/}
+              {/*  }}*/}
+              {/*  name={"passwordConfirm"}*/}
+              {/*  control={form.control}*/}
+              {/*/>*/}
+              <ControllerWithError
+                controlProps={{
+                  control: form.control,
+                  name: "passwordConfirm",
                 }}
-                name={"passwordConfirm"}
-                control={form.control}
+                labelProps={{
+                  label: "Password Confirmation",
+                }}
+                inputProps={{
+                  autoComplete: "new-password",
+                  placeholder: "Don't make mistakes!",
+                  secureTextEntry: true,
+                  id: "passwordConfirm",
+                }}
               />
             </YStack>
             <Button themeInverse size={"$3"} mt={"$4"}>
