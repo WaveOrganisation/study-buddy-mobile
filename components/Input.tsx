@@ -83,7 +83,7 @@ const ControllerWithError = ({
                 </Text>
               ) : (
                 <Text ml={"$3"} color={"$colorHover"} opacity={0}>
-                  Easter egg: This is a placeholder for a validation message
+                  Easter egg
                 </Text>
               )}
             </>

@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
-import React, { useMemo, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { phoneNumberRegex } from "@/shared/regex";
-import { Button, H3, H5, Input, Label, View, YStack } from "tamagui";
+import { Button, H3, H5, View, YStack } from "tamagui";
+import { ControllerWithError } from "@/components/Input";
 
 const signUpSchema = z.object({
   user: z.string().regex(phoneNumberRegex, "Please enter a valid phone number"),
@@ -36,30 +37,18 @@ const SignUpBottomSheetUI = () => {
       </View>
       <YStack my={"$5"} gap={"$4"}>
         <YStack gap="$1">
-          <Controller
-            control={form.control}
-            rules={{ required: true }}
-            name={"user"}
-            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => {
-              return (
-                <>
-                  <Label htmlFor="user" color={error ? "red" : "$color"}>
-                    Phone Number
-                  </Label>
-                  <Input
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    borderColor={error ? "red" : "$borderColor"}
-                    focusStyle={{
-                      borderColor: error ? "$red10" : "$borderColorFocus",
-                    }}
-                    id="user"
-                    placeholder={"052 574 4414"}
-                    autoComplete={"tel"}
-                  />
-                </>
-              );
+          <ControllerWithError
+            controlProps={{
+              control: form.control,
+              name: "user",
+            }}
+            labelProps={{
+              label: "Phone Number",
+            }}
+            inputProps={{
+              autoComplete: "tel",
+              placeholder: "052 574 4414",
+              id: "user",
             }}
           />
         </YStack>

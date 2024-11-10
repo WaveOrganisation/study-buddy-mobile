@@ -8,6 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ArrowRight } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import GestureGoBack from "@/components/gestureGoBack";
+import { ControllerWithError } from "@/components/Input";
 
 const passwordRecoverySchema = z.object({
   user: z.string().regex(phoneNumberRegex, "Please enter a valid phone number"),
@@ -35,28 +36,42 @@ const PasswordRecoveryScreen = () => {
               Enter your phone number to reset your password.
             </H4>
             <YStack gap="$1">
-              <Controller
-                control={form.control}
-                rules={{ required: true }}
-                name={"user"}
-                render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => {
-                  return (
-                    <>
-                      <Label htmlFor="fullName" color={error ? "red" : "$color"}>
-                        Phone Number
-                      </Label>
+              {/*<Controller*/}
+              {/*  control={form.control}*/}
+              {/*  rules={{ required: true }}*/}
+              {/*  name={"user"}*/}
+              {/*  render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => {*/}
+              {/*    return (*/}
+              {/*      <>*/}
+              {/*        <Label htmlFor="fullName" color={error ? "red" : "$color"}>*/}
+              {/*          Phone Number*/}
+              {/*        </Label>*/}
 
-                      <Input
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        id="fullName"
-                        borderColor={error ? "red" : "$borderColor"}
-                        placeholder={"052 574 4414"}
-                        autoComplete={"name"}
-                      />
-                    </>
-                  );
+              {/*        <Input*/}
+              {/*          onChangeText={onChange}*/}
+              {/*          onBlur={onBlur}*/}
+              {/*          value={value}*/}
+              {/*          id="fullName"*/}
+              {/*          borderColor={error ? "red" : "$borderColor"}*/}
+              {/*          placeholder={"052 574 4414"}*/}
+              {/*          autoComplete={"name"}*/}
+              {/*        />*/}
+              {/*      </>*/}
+              {/*    );*/}
+              {/*  }}*/}
+              {/*/>*/}
+              <ControllerWithError
+                controlProps={{
+                  control: form.control,
+                  name: "user",
+                }}
+                labelProps={{
+                  label: "Phone Number",
+                }}
+                inputProps={{
+                  autoComplete: "tel",
+                  placeholder: "052 574 4414",
+                  id: "user",
                 }}
               />
             </YStack>

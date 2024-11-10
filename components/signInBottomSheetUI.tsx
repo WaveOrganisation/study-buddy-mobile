@@ -10,6 +10,7 @@ import { z } from "zod";
 import { phoneNumberRegex } from "@/shared/regex";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ControllerWithError } from "@/components/Input";
 
 const signInSchema = z.object({
   user: z
@@ -46,65 +47,40 @@ const SignInBottomSheetUI = () => {
         <H5 textAlign={"center"}>Please enter your credentials to sign in your account.</H5>
       </View>
       <YStack my={"$5"} gap={"$4"}>
-        <YStack gap="$1">
-          {/*<Input*/}
-          {/*  value={user}*/}
-          {/*  onChangeText={setUser}*/}
-          {/*  id="user"*/}
-          {/*  placeholder={"052 574 4414 (yatochka)"}*/}
-          {/*  autoComplete={startsWithANumber ? "tel" : "username"}*/}
-          {/*  color={theme.SECONDARY_COLOR}*/}
-          {/*/>*/}
-          <Controller
-            control={form.control}
-            rules={{ required: true }}
-            name={"user"}
-            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => {
-              return (
-                <>
-                  <Label htmlFor="user" color={error ? "red" : "$color"}>
-                    Username or Phone Number
-                  </Label>
-                  <Input
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    borderColor={error ? "red" : "$borderColor"}
-                    id="user"
-                    placeholder={"052 574 4414 (yatochka)"}
-                    autoComplete={startsWithANumber ? "tel" : "username"}
-                  />
-                </>
-              );
-            }}
-          />
-        </YStack>
-        <YStack gap="$1">
-          <Controller
-            control={form.control}
-            rules={{ required: true }}
-            name={"password"}
-            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => {
-              return (
-                <>
-                  <Label htmlFor="password" color={error ? "red" : "$color"}>
-                    Password
-                  </Label>
-
-                  <Input
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    borderColor={error ? "red" : "$borderColor"}
-                    id="password"
-                    secureTextEntry
-                    placeholder={'"Your Very Secure Password"'}
-                    autoComplete={startsWithANumber ? "tel" : "username"}
-                  />
-                </>
-              );
-            }}
-          />
+        <YStack gap={"$1"}>
+          <YStack gap="$1">
+            <ControllerWithError
+              controlProps={{
+                control: form.control,
+                name: "user",
+              }}
+              labelProps={{
+                label: "Username or Phone Number",
+              }}
+              inputProps={{
+                autoComplete: startsWithANumber ? "tel" : "username",
+                placeholder: "052 574 4414 (yatochka)",
+                id: "user",
+              }}
+            />
+          </YStack>
+          <YStack gap="$1">
+            <ControllerWithError
+              controlProps={{
+                control: form.control,
+                name: "password",
+              }}
+              labelProps={{
+                label: "Password",
+              }}
+              inputProps={{
+                autoComplete: "password",
+                placeholder: "Your Very Secure Password",
+                secureTextEntry: true,
+                id: "password",
+              }}
+            />
+          </YStack>
         </YStack>
         <Button themeInverse onPress={handleSubmit}>
           Sign In
