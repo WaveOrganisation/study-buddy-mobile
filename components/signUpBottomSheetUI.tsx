@@ -2,11 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Text, View } from "tamagui";
 import { z } from "zod";
 
 import { phoneNumberRegex } from "@/shared/regex";
-import { Button, H3, H5, Input, Label, YStack } from "tamagui";
+import { Button, H3, H5, Input, Label, View, YStack } from "tamagui";
 
 const signUpSchema = z.object({
   user: z.string().regex(phoneNumberRegex, "Please enter a valid phone number"),

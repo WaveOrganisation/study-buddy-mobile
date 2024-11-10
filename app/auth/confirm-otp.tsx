@@ -34,7 +34,7 @@ const Page = () => {
       // Alert.alert('Success', 'OTP verified successfully!');
 
       if (paramsLocal.redirect == "signin") {
-        router.replace("/home");
+        router.replace("/(authenticated)");
       } else if (paramsLocal.redirect === "signup") {
         router.replace(`/auth/fill-credentials?user=${paramsLocal.phoneNumber}`);
       } else {
@@ -72,6 +72,7 @@ const Page = () => {
             <Text>Enter 6-digit code.</Text>
             <OtpInput
               hideStick
+              onFilled={handleOtpFilled}
               theme={{
                 pinCodeContainerStyle: {
                   borderRadius: 5,
