@@ -13,44 +13,22 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-import { Check, CheckCircle2 } from "@tamagui/lucide-icons";
+import { CheckCircle2 } from "@tamagui/lucide-icons";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { theme } from "@/theme";
 import { useLocalSearchParams } from "expo-router";
 import GestureGoBack from "@/components/gestureGoBack";
 import { z } from "zod";
-import {
-  hasDigit,
-  hasLowercase,
-  hasSpecialChar,
-  hasUppercase,
-  passwordRegex,
-} from "@/shared/regex";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LabelWithErrorState, InputWithErrorState, ControllerWithError } from "@/components/Input";
+import { ControllerWithError } from "@/components/Input";
+import { passwordString } from "@/shared/schema";
 
 const fillCredentialsSchema = z
   .object({
     username: z.string().min(1).max(52).includes("skibidi"),
     fullName: z.string().min(1).max(52).includes("skibidi"),
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters long")
-      .max(64, "Password cannot exceed 64 characters")
-      .refine((val) => hasLowercase.test(val), {
-        message: "Password must contain at least one lowercase letter",
-      })
-      .refine((val) => hasUppercase.test(val), {
-        message: "Password must contain at least one uppercase letter",
-      })
-      .refine((val) => hasDigit.test(val), {
-        message: "Password must contain at least one digit",
-      })
-      .refine((val) => hasSpecialChar.test(val), {
-        message: "Password must contain at least one special character (@$!%*?&)",
-      }),
+    password: passwordString,
     passwordConfirm: z.string(),
   })
   .refine((data) => data.password === data.passwordConfirm, {

@@ -6,3 +6,5 @@ export const hasLowercase = /[a-z]/;
 export const hasUppercase = /[A-Z]/;
 export const hasDigit = /\d/;
 export const hasSpecialChar = /[@$!%*?&]/;
+
+export const usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;

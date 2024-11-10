@@ -11,13 +11,11 @@ import { phoneNumberRegex } from "@/shared/regex";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ControllerWithError } from "@/components/Input";
+import { passwordString, phoneNumberOrUsernameString } from "@/shared/schema";
 
 const signInSchema = z.object({
-  user: z
-    .string()
-    .regex(phoneNumberRegex, "Please enter a valid phone number")
-    .or(z.string().min(1).max(20)),
-  password: z.string().min(1).max(20),
+  user: phoneNumberOrUsernameString,
+  password: passwordString,
 });
 
 const SignInBottomSheetUI = () => {

@@ -107,15 +107,15 @@ function SignUpButton() {
 }
 
 export default function OnboardingScreen() {
-  const { t, i18n } = useTranslation();
-  console.log(i18n.language);
+  // const { t, i18n } = useTranslation();
+  // console.log(i18n.language);
   return (
     <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <SafeAreaView>
             <YStack p={"$7"} gap={"$7"}>
-              <Text style={styles.titleText}>{t("Welcome to React")}</Text>
+              <Text style={styles.titleText}>StudyBuddy</Text>
               <View>
                 <Image
                   style={{
