@@ -3,6 +3,7 @@ import { Text } from "tamagui";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Input, InputProps, Label, LabelProps } from "tamagui";
 import { Controller, ControllerProps } from "react-hook-form";
+import useRTL from "@/hooks/useRTL";
 
 type InputPropsWithError = InputProps & {
   error?: boolean;
@@ -34,17 +35,6 @@ const InputWithErrorState = ({ error, ...props }: InputPropsWithError) => {
   );
 };
 
-// const ControllerWithErrorN = ({ controlProps, inputProps, labelProps }: { controlProps: ControllerProps, inputProps: InputPropsWithError, labelProps: LabelPropsWithError }) => {
-//     return (<>
-//
-//         <Controller  control={controlProps.control}>
-//     </>
-//
-//         );
-// };
-//
-// export { LabelWithErrorState, InputWithErrorState };
-
 const ControllerWithError = ({
   controlProps,
   inputProps,
@@ -59,6 +49,7 @@ const ControllerWithError = ({
     label: string;
   } & LabelPropsWithError;
 }) => {
+  const isRTL = useRTL();
   return (
     <>
       <Controller
@@ -76,6 +67,7 @@ const ControllerWithError = ({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
+                direction={isRTL ? "rtl" : "ltr"}
               />
               {invalid ? (
                 <Text ml={"$3"} color={errorColor}>
