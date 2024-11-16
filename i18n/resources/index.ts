@@ -10,3 +10,6 @@ export { default as PageOnboarding_EN } from "@/i18n/resources/en/page_onboardin
 export { default as PagePrivacyPolicy_RU } from "@/i18n/resources/ru/page_privacyPolicy";
 export { default as PagePrivacyPolicy_HE } from "@/i18n/resources/he/page_privacyPolicy";
 export { default as PagePrivacyPolicy_EN } from "@/i18n/resources/en/page_privacyPolicy";
+export { default as PageSettings_RU } from "@/i18n/resources/ru/page_Settings";
+export { default as PageSettings_HE } from "@/i18n/resources/he/page_Settings";
+export { default as PageSettings_EN } from "@/i18n/resources/en/page_Settings";

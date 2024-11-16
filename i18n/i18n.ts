@@ -25,6 +25,7 @@ const resources = {
     validation: R.Validation_EN,
     pageOnboarding: R.PageOnboarding_EN,
     pagePrivacyPolicy: R.PagePrivacyPolicy_EN,
+    pageSettings: R.PageSettings_EN,
   },
   he: {
     translation: {},
@@ -32,6 +33,7 @@ const resources = {
     validation: R.Validation_HE,
     pageOnboarding: R.PageOnboarding_HE,
     pagePrivacyPolicy: R.PagePrivacyPolicy_HE,
+    pageSettings: R.PageSettings_HE,
   },
   ru: {
     translation: {},
@@ -39,6 +41,7 @@ const resources = {
     validation: R.Validation_RU,
     pageOnboarding: R.PageOnboarding_RU,
     pagePrivacyPolicy: R.PagePrivacyPolicy_RU,
+    pageSettings: R.PageSettings_RU,
   },
 };
 
