@@ -39,6 +39,8 @@ export const passwordString = z
     message: passwordContainsSpecialChar,
   });
 
+export const signInPasswordString = z.string();
+
 export const phoneNumberString = z
   .string()
   .regex(phoneNumberRegex, i18next.t("phone", { ns: "validation" }));

@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <Redirect href="/(authenticated)/settings" />
+      <Redirect href="/auth" />
     </>
   );
 }

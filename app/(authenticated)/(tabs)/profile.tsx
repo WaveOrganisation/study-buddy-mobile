@@ -1,8 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Avatar, View } from "tamagui";
+import { Avatar, Button, View } from "tamagui";
 import GestureGoBack from "@/components/gestureGoBack";
+import { Link } from "expo-router";
 
 const Profile = () => {
   return (
@@ -28,7 +27,10 @@ const Profile = () => {
             <Avatar.Fallback backgroundColor="$blue10" />
           </Avatar>
         </View>
-        <Text>Profile</Text>
+
+        <Link href={"/(authenticated)/settings"} asChild push>
+          <Button themeInverse>Settings</Button>
+        </Link>
       </View>
     </>
   );

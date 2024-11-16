@@ -1,31 +1,22 @@
-import Feather from "@expo/vector-icons/Feather";
-import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
-import { usePostHog } from "posthog-react-native";
-import React, { useMemo, useState } from "react";
-import { Button, H2, H3, H4, H5, Input, Label, Text, View, YStack } from "tamagui";
+import React, { useMemo } from "react";
+import { Button, H3, H5, Text, View, YStack } from "tamagui";
 
 import { Link, useRouter } from "expo-router";
 import { z } from "zod";
-import { phoneNumberRegex } from "@/shared/regex";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ControllerWithError } from "@/components/Input";
-import { passwordString, phoneNumberOrUsernameString } from "@/shared/schema";
+import { phoneNumberOrUsernameString, signInPasswordString } from "@/shared/schema";
 import { useTranslation } from "react-i18next";
 
 const signInSchema = z.object({
   user: phoneNumberOrUsernameString,
-  password: passwordString,
+  password: signInPasswordString,
 });
 
 const SignInBottomSheetUI = () => {
   const { t } = useTranslation("pageOnboarding");
   const router = useRouter();
-  const [user, setUser] = useState<string>("");
-
-  const startsWithANumber = useMemo(() => {
-    return /^[0-9]/.test(user);
-  }, []);
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -35,8 +26,13 @@ const SignInBottomSheetUI = () => {
       user: "",
     },
   });
-  const handleSubmit = form.handleSubmit((data) => {
-    router.push(`/(authenticated)`);
+
+  const startsWithANumber = useMemo(() => {
+    return /^[0-9]/.test(form.watch("user"));
+  }, []);
+
+  const handleSubmit = form.handleSubmit((_data) => {
+    router.replace(`/(authenticated)`);
   });
 
   return (
