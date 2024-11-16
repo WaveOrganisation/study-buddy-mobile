@@ -20,15 +20,6 @@ export default function Layout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
-
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Settings",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="settings" color={color} />,
-        }}
-      />
     </Tabs>
   );
 }
