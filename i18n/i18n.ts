@@ -2,7 +2,8 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import * as R from "@/i18n/resources";
 import { getLocales } from "expo-localization";
-import { getLanguageFromStorage } from "@/hooks/useLocalization";
+
+import { getLanguageFromStorage } from "@/utils/localization";
 
 const getLanguage = () => {
   const language = getLanguageFromStorage();

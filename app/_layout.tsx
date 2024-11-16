@@ -10,6 +10,7 @@ import { TamaguiProvider, Theme } from "tamagui";
 import tamaguiConfig from "@/tamagui.config";
 import GestureGoBack from "@/components/gestureGoBack";
 import "../i18n/i18n";
+import { Providers } from "@/components/Providers";
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "index",
@@ -36,26 +37,16 @@ export default function RootLayout() {
   }
   return (
     <>
-      <TamaguiProvider config={tamaguiConfig}>
-        <Theme name={colorScheme === "dark" ? "dark" : "light"}>
-          <QueryClientProvider client={queryClient}>
-            <PostHogProvider
-              apiKey="phc_FBc5Pd4gmFrFW4hzl1rPSxiqNJytUkj30x85FXWSL8B"
-              options={{
-                host: "https://us.i.posthog.com",
-              }}>
-              <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
-              <Stack>
-                <Stack.Screen name="auth" options={{ headerShown: false }} />
-                <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
-                <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen name="info" options={{ headerShown: false }} />
-              </Stack>
-            </PostHogProvider>
-          </QueryClientProvider>
-        </Theme>
-      </TamaguiProvider>
+      <Providers>
+        <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
+        <Stack>
+          <Stack.Screen name="auth" options={{ headerShown: false }} />
+          <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="info" options={{ headerShown: false }} />
+        </Stack>
+      </Providers>
     </>
   );
 }

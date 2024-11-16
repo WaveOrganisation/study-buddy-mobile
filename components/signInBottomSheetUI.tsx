@@ -4,7 +4,6 @@ import { usePostHog } from "posthog-react-native";
 import React, { useMemo, useState } from "react";
 import { Button, H2, H3, H4, H5, Input, Label, Text, View, YStack } from "tamagui";
 
-import { theme } from "@/theme";
 import { Link, useRouter } from "expo-router";
 import { z } from "zod";
 import { phoneNumberRegex } from "@/shared/regex";

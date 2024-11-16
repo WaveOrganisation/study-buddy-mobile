@@ -2,9 +2,10 @@ import React, { memo, useState } from "react";
 import { XStack } from "tamagui";
 import { SwitchWithLabel } from "@/components/SwitchWithLabel";
 import { useTranslation } from "react-i18next";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 export const DarkModeSwitch = memo(() => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const theme = useThemeStore();
   const { t } = useTranslation("pageSettings");
   return (
     <XStack width={"100%"}>
@@ -12,8 +13,8 @@ export const DarkModeSwitch = memo(() => {
         label={t("darkMode")}
         labelSize={"$5"}
         size="$3"
-        isChecked={isDarkMode}
-        onChange={() => setIsDarkMode(!isDarkMode)}
+        isChecked={theme.theme === "dark"}
+        onChange={theme.switchTheme}
       />
     </XStack>
   );

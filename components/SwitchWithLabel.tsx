@@ -2,6 +2,8 @@ import { Label, Separator, SizeTokens, Switch, XStack } from "tamagui";
 import { MoonStar } from "@tamagui/lucide-icons";
 import { Platform } from "react-native";
 import React from "react";
+import { useTranslation } from "react-i18next";
+import useRTL from "@/hooks/useRTL";
 
 export function SwitchWithLabel({
   label,
@@ -17,12 +19,16 @@ export function SwitchWithLabel({
   labelSize?: SizeTokens;
 }) {
   const id = `switch-${size.toString().slice(1)}-${isChecked}`;
+  const isRTL = useRTL();
 
   return (
-    <XStack width={"100%"} alignItems="center" justifyContent="space-between">
-      <XStack alignItems={"center"} gap={"$3"}>
+    <XStack
+      width={"100%"}
+      alignItems="center"
+      justifyContent="space-between"
+      flexDirection={isRTL ? "row-reverse" : "row"}>
+      <XStack alignItems={"center"} gap={"$3"} flexDirection={isRTL ? "row-reverse" : "row"}>
         <MoonStar size={"$2.5"} />
-
         <Label
           display="flex"
           paddingRight="$0"

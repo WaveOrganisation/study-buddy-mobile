@@ -2,7 +2,8 @@ import React from "react";
 import { Adapt, Select, Sheet, YStack } from "tamagui";
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import { Platform } from "react-native";
-import useLocalization, { languages } from "@/hooks/useLocalization";
+import useLocalization from "@/hooks/useLocalization";
+import { languages } from "@/utils/localization";
 
 const LanguageSelector = () => {
   const localization = useLocalization();
