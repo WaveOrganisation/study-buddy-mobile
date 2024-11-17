@@ -1,4 +1,4 @@
-import { Redirect, Stack } from "expo-router";
+import { Stack } from "expo-router";
 
 export default function AuthLayout() {
   return (
@@ -11,14 +11,7 @@ export default function AuthLayout() {
           headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="confirm-otp"
-        options={{
-          title: "Confirm Your Phone Number",
-          headerShown: true,
-          gestureEnabled: true,
-        }}
-      />
+
       <Stack.Screen
         name="fill-credentials"
         options={{

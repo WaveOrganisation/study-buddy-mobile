@@ -1,18 +1,5 @@
 import React from "react";
-import {
-  Button,
-  H2,
-  H4,
-  H5,
-  H6,
-  Input,
-  Label,
-  Text,
-  Unspaced,
-  View,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Button, H2, H6, Text, XStack, YStack } from "tamagui";
 import { CheckCircle2 } from "@tamagui/lucide-icons";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -23,6 +10,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ControllerWithError } from "@/components/Input";
 import { passwordString } from "@/shared/schema";
+import { mutate } from "@/utils/api";
+import { useMutation } from "@tanstack/react-query";
 
 const fillCredentialsSchema = z
   .object({
@@ -35,7 +24,15 @@ const fillCredentialsSchema = z
     message: "Passwords do not match",
     path: ["passwordConfirm"],
   });
+
 const FillCredentials = () => {
+  const mutation = useMutation({
+    mutationFn: async (data: z.infer<typeof fillCredentialsSchema>) => {
+      return await mutate<{ confirmationCode: string }>("auth/register", "POST", data);
+    },
+    onSuccess: async (data) => {},
+  });
+
   const params = useLocalSearchParams<{ user: string }>();
   const form = useForm<z.infer<typeof fillCredentialsSchema>>({
     resolver: zodResolver(fillCredentialsSchema),
@@ -48,6 +45,8 @@ const FillCredentials = () => {
       passwordConfirm: "",
     },
   });
+
+  const handleSubmit = form.handleSubmit((data) => {});
 
   return (
     <>
@@ -261,7 +260,7 @@ const FillCredentials = () => {
                 }}
               />
             </YStack>
-            <Button themeInverse size={"$3"} mt={"$4"}>
+            <Button themeInverse size={"$3"} mt={"$4"} onPress={handleSubmit}>
               Submit
             </Button>
           </YStack>

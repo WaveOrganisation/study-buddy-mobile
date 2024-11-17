@@ -3,20 +3,32 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { phoneNumberRegex } from "@/shared/regex";
 import { Button, H3, H5, View, YStack } from "tamagui";
 import { ControllerWithError } from "@/components/Input";
 import { useTranslation } from "react-i18next";
 import { phoneNumberString } from "@/shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { mutate } from "@/utils/api";
 
 const signUpSchema = z.object({
   user: phoneNumberString,
 });
 
 const SignUpBottomSheetUI = () => {
-  const { t } = useTranslation("pageOnboarding");
   const router = useRouter();
+
+  const mutation = useMutation({
+    mutationFn: async (phoneNumber: string) => {
+      return await mutate<{ confirmationCode: string }>("auth/send-confirmation-code", "POST", {
+        phoneNumber,
+      });
+    },
+    onSuccess: async (data, phoneNumber, context) => {
+      console.log(data);
+      router.push(`/auth/${phoneNumber}/confirm-otp-signup`);
+    },
+  });
+  const { t } = useTranslation("pageOnboarding");
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -27,7 +39,7 @@ const SignUpBottomSheetUI = () => {
     },
   });
   const handleSubmit = form.handleSubmit((data) => {
-    router.push(`/auth/confirm-otp?phoneNumber=${data.user}&redirect=signup`);
+    mutation.mutate(data.user);
   });
 
   return (

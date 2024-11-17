@@ -83,9 +83,14 @@ export async function mutate<TResponseData>(
 ) {
   const url = await buildURL(path); // Build the URL  with the path and query parameters
 
-  return ky<TResponseData>(url, {
+  const response = await ky(url, {
     ...options,
     method,
     json: body,
   });
+
+  return {
+    data: await response.json<TResponseData>(),
+    response,
+  };
 }
