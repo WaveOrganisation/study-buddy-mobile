@@ -1,32 +1,22 @@
-import Feather from "@expo/vector-icons/Feather";
-import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
-import { usePostHog } from "posthog-react-native";
-import React, { useMemo, useState } from "react";
-import { Button, H2, H3, H4, H5, Input, Label, Text, View, YStack } from "tamagui";
+import React, { useMemo } from "react";
+import { Button, H3, H5, Text, View, YStack } from "tamagui";
 
-import { theme } from "@/theme";
 import { Link, useRouter } from "expo-router";
 import { z } from "zod";
-import { phoneNumberRegex } from "@/shared/regex";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ControllerWithError } from "@/components/Input";
+import { phoneNumberOrUsernameString, signInPasswordString } from "@/shared/schema";
+import { useTranslation } from "react-i18next";
 
 const signInSchema = z.object({
-  user: z
-    .string()
-    .regex(phoneNumberRegex, "Please enter a valid phone number")
-    .or(z.string().min(1).max(20)),
-  password: z.string().min(1).max(20),
+  user: phoneNumberOrUsernameString,
+  password: signInPasswordString,
 });
 
 const SignInBottomSheetUI = () => {
+  const { t } = useTranslation("pageOnboarding");
   const router = useRouter();
-  const [user, setUser] = useState<string>("");
-
-  const startsWithANumber = useMemo(() => {
-    return /^[0-9]/.test(user);
-  }, []);
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -36,15 +26,22 @@ const SignInBottomSheetUI = () => {
       user: "",
     },
   });
-  const handleSubmit = form.handleSubmit((data) => {
-    router.push(`/(authenticated)`);
+
+  const startsWithANumber = useMemo(() => {
+    return /^[0-9]/.test(form.watch("user"));
+  }, []);
+
+  const handleSubmit = form.handleSubmit((_data) => {
+    router.replace(`/(authenticated)`);
   });
 
   return (
     <View py="$8" px={"$4"}>
       <View gap={"$1"}>
-        <H3 textAlign={"center"}>Welcome Back!</H3>
-        <H5 textAlign={"center"}>Please enter your credentials to sign in your account.</H5>
+        <H3 textAlign={"center"}>{t("signInSheetTitle")}</H3>
+        <H5 textAlign={"center"} color={"$colorHover"} textTransform={"none"}>
+          {t("signInSheetMessage")}
+        </H5>
       </View>
       <YStack my={"$5"} gap={"$4"}>
         <YStack gap={"$1"}>
@@ -55,11 +52,11 @@ const SignInBottomSheetUI = () => {
                 name: "user",
               }}
               labelProps={{
-                label: "Username or Phone Number",
+                label: t("userFieldLabel"),
               }}
               inputProps={{
                 autoComplete: startsWithANumber ? "tel" : "username",
-                placeholder: "052 574 4414 (yatochka)",
+                placeholder: t("userFieldPlaceholder"),
                 id: "user",
               }}
             />
@@ -71,11 +68,11 @@ const SignInBottomSheetUI = () => {
                 name: "password",
               }}
               labelProps={{
-                label: "Password",
+                label: t("passwordFieldLabel"),
               }}
               inputProps={{
                 autoComplete: "password",
-                placeholder: "Your Very Secure Password",
+                placeholder: t("passwordFieldPlaceholder"),
                 secureTextEntry: true,
                 id: "password",
               }}
@@ -83,11 +80,11 @@ const SignInBottomSheetUI = () => {
           </YStack>
         </YStack>
         <Button themeInverse onPress={handleSubmit}>
-          Sign In
+          {t("buttonSignIn")}
         </Button>
         <Link href={"/auth/password-recovery"} push asChild>
           <Text color={"$colorHover"} textDecorationLine={"underline"} textAlign={"center"}>
-            Forgot your password?{" "}
+            {t("forgotPassword")}{" "}
           </Text>
         </Link>
       </YStack>

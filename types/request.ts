@@ -1,4 +1,4 @@
-// Meta information about the request
+// Meta information about the request headers, omitting 'Accept' and 'Content-Type'
 type CommonHttpHeaders = {
   Accept?: string;
   "Accept-Charset"?: string;
@@ -39,46 +39,30 @@ type CommonHttpHeaders = {
 };
 
 type THeaders = Omit<CommonHttpHeaders, "Accept" | "Content-Type">;
+
+// Interface for request metadata including path and headers
 export interface IRequestMeta {
   path: string;
-  headers: THeaders;
+  headers?: THeaders;
 }
 
-// Possible request methods
-export type IRequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+// Conditional types for defining the type of the body based on the request method
+export type TRequestBodyWithBody = object;
 
-// Conditional type for request body based on method
-export type TRequestBody<M extends IRequestMethod> = M extends "GET" ? undefined : object;
-
-// A mapped type to infer the method from the object itself
-export type TRequestMap = {
-  GET: IRequest<"GET">;
-  POST: IRequest<"POST">;
-  PUT: IRequest<"PUT">;
-  DELETE: IRequest<"DELETE">;
-};
-
+// Type definition for query parameters in a URL
 export type QueryParams = Record<string, string | number | boolean>;
 
-// Main request interface with inferred method types
-export interface IRequest<M extends IRequestMethod> extends IRequestMeta {
-  method: M;
-  body: TRequestBody<M>;
+// Interface for defining the structure of requests without body
+export interface IRequestWithoutBody extends IRequestMeta {
   queryParams?: QueryParams;
 }
 
-// Use this type to avoid specifying the method type manually
-export type TRequest = TRequestMap[keyof TRequestMap];
+// Interface for defining the structure of requests with body
+export interface IRequestWithBody extends IRequestMeta {
+  method: "POST" | "PUT" | "DELETE";
+  body: TRequestBodyWithBody;
+  queryParams?: QueryParams;
+}
 
-const request: TRequest = {
-  method: "POST",
-  path: "/courses",
-  headers: {
-    ngga: "test",
-  },
-  body: {
-    title: "Test Course",
-    description: "Test Course Description",
-    course_code: "test-course-code",
-  },
-};
+// Type alias to simplify usage of request types without specifying the method explicitly
+export type TRequest = IRequestWithoutBody | IRequestWithBody;

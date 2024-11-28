@@ -3,7 +3,7 @@
     "name": "StudyBuddy",
     "slug": "studybuddy",
     "version": "0.0.1",
-    "scheme": "d",
+    "scheme": "studybuddy",
     "web": {
       "bundler": "metro",
       "output": "static",

@@ -20,6 +20,7 @@ import SignUpBottomSheetUI from "@/components/signUpBottomSheetUI";
 import { useTranslation } from "react-i18next";
 
 function SignInButton() {
+  const { t } = useTranslation("pageOnboarding");
   const posthog = usePostHog();
   const signInSnapPoints = useMemo(() => ["62%"], []);
   // const confirmOTPSnapPoints = useMemo(() => ['25%'], []);
@@ -48,7 +49,7 @@ function SignInButton() {
   return (
     <>
       <Button onPress={handleSignInPresentPress} themeInverse>
-        Sign In
+        {t("buttonSignIn")}
       </Button>
       <BottomSheetModal
         backdropComponent={CustomBackdrop}
@@ -64,6 +65,7 @@ function SignInButton() {
   );
 }
 function SignUpButton() {
+  const { t } = useTranslation("pageOnboarding");
   const router = useRouter();
   const posthog = usePostHog();
   const signUpSnapPoints = useMemo(() => ["45%"], []);
@@ -90,7 +92,7 @@ function SignUpButton() {
   return (
     <>
       <Button onPress={handleSignInPresentPress} borderColor={"black"}>
-        Sign Up
+        {t("buttonSignUp")}
       </Button>
       <BottomSheetModal
         backdropComponent={CustomBackdrop}
@@ -107,15 +109,15 @@ function SignUpButton() {
 }
 
 export default function OnboardingScreen() {
-  const { t, i18n } = useTranslation();
-  console.log(i18n.language);
+  const { t } = useTranslation("pageOnboarding");
+  // console.log(i18n.language);
   return (
     <>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <SafeAreaView>
             <YStack p={"$7"} gap={"$7"}>
-              <Text style={styles.titleText}>{t("Welcome to React")}</Text>
+              <Text style={styles.titleText}>{t("title")}</Text>
               <View>
                 <Image
                   style={{
@@ -133,17 +135,17 @@ export default function OnboardingScreen() {
               </YStack>
               <View>
                 <Text textAlign={"center"}>
-                  By Signing Up, you agree to our {"\n"}
+                  {t("bySigningUp")} {"\n"}
                   <Link href={"/info/user-notice"} push asChild>
-                    <Text textDecorationLine={"underline"}>User Notice</Text>
+                    <Text textDecorationLine={"underline"}>{t("userNotice")}</Text>
                   </Link>{" "}
-                  and{" "}
+                  {t("and")}{" "}
                   <Link href={"/info/privacy-policy"} push asChild>
-                    <Text textDecorationLine={"underline"}>Privacy Policy</Text>
+                    <Text textDecorationLine={"underline"}>{t("privacyPolicy")}</Text>
                   </Link>
                   .{"\n\n"}
                   <Link href={"/info/help"} push asChild>
-                    <Text textDecorationLine={"underline"}>Can't sign in or sign up?</Text>
+                    <Text textDecorationLine={"underline"}>{t("cantSignIn")}</Text>
                   </Link>
                 </Text>
               </View>

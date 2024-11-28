@@ -1,63 +1,41 @@
 import React from "react";
-import {
-  Button,
-  H2,
-  H4,
-  H5,
-  H6,
-  Input,
-  Label,
-  Text,
-  Unspaced,
-  View,
-  XStack,
-  YStack,
-} from "tamagui";
-import { Check, CheckCircle2 } from "@tamagui/lucide-icons";
+import { Button, H2, H6, Text, XStack, YStack } from "tamagui";
+import { CheckCircle2 } from "@tamagui/lucide-icons";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { theme } from "@/theme";
 import { useLocalSearchParams } from "expo-router";
 import GestureGoBack from "@/components/gestureGoBack";
 import { z } from "zod";
-import {
-  hasDigit,
-  hasLowercase,
-  hasSpecialChar,
-  hasUppercase,
-  passwordRegex,
-} from "@/shared/regex";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LabelWithErrorState, InputWithErrorState, ControllerWithError } from "@/components/Input";
+import { ControllerWithError } from "@/components/Input";
+import { passwordString } from "@/shared/schema";
+import { mutate } from "@/utils/api";
+import { useMutation } from "@tanstack/react-query";
+import { ApiRoutes } from "@/utils/endpoints";
 
 const fillCredentialsSchema = z
   .object({
     username: z.string().min(1).max(52).includes("skibidi"),
     fullName: z.string().min(1).max(52).includes("skibidi"),
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters long")
-      .max(64, "Password cannot exceed 64 characters")
-      .refine((val) => hasLowercase.test(val), {
-        message: "Password must contain at least one lowercase letter",
-      })
-      .refine((val) => hasUppercase.test(val), {
-        message: "Password must contain at least one uppercase letter",
-      })
-      .refine((val) => hasDigit.test(val), {
-        message: "Password must contain at least one digit",
-      })
-      .refine((val) => hasSpecialChar.test(val), {
-        message: "Password must contain at least one special character (@$!%*?&)",
-      }),
+    password: passwordString,
     passwordConfirm: z.string(),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: "Passwords do not match",
     path: ["passwordConfirm"],
   });
+
 const FillCredentials = () => {
+  const mutation = useMutation({
+    mutationFn: async (data: z.infer<typeof fillCredentialsSchema>) => {
+      return await mutate<{ confirmationCode: string }>(ApiRoutes.SignUp, "POST", data);
+    },
+    onSuccess: async (data) => {
+      console.log(data);
+    },
+  });
+
   const params = useLocalSearchParams<{ user: string }>();
   const form = useForm<z.infer<typeof fillCredentialsSchema>>({
     resolver: zodResolver(fillCredentialsSchema),
@@ -69,6 +47,10 @@ const FillCredentials = () => {
       password: "",
       passwordConfirm: "",
     },
+  });
+
+  const handleSubmit = form.handleSubmit((data) => {
+    mutation.mutate(data);
   });
 
   return (
@@ -283,7 +265,7 @@ const FillCredentials = () => {
                 }}
               />
             </YStack>
-            <Button themeInverse size={"$3"} mt={"$4"}>
+            <Button themeInverse size={"$3"} mt={"$4"} onPress={handleSubmit}>
               Submit
             </Button>
           </YStack>

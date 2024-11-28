@@ -3,17 +3,36 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { phoneNumberRegex } from "@/shared/regex";
 import { Button, H3, H5, View, YStack } from "tamagui";
 import { ControllerWithError } from "@/components/Input";
+import { useTranslation } from "react-i18next";
+import { phoneNumberString } from "@/shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { mutate } from "@/utils/api";
+import { ApiRoutes } from "@/utils/endpoints";
 
 const signUpSchema = z.object({
-  user: z.string().regex(phoneNumberRegex, "Please enter a valid phone number"),
+  user: phoneNumberString,
 });
 
 const SignUpBottomSheetUI = () => {
   const router = useRouter();
+
+  const mutation = useMutation({
+    mutationFn: async (phoneNumber: string) => {
+      return await mutate<{ confirmationCode: string }>(ApiRoutes.RequestOtp, "POST", {
+        phoneNumber,
+      });
+    },
+    onSuccess: async (data, phoneNumber) => {
+      console.log(data.data.confirmationCode);
+      router.push({
+        pathname: "/auth/[phoneNumber]/confirm-otp-signup",
+        params: { phoneNumber: phoneNumber },
+      });
+    },
+  });
+  const { t } = useTranslation("pageOnboarding");
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -24,15 +43,15 @@ const SignUpBottomSheetUI = () => {
     },
   });
   const handleSubmit = form.handleSubmit((data) => {
-    router.push(`/auth/confirm-otp?phoneNumber=${data.user}&redirect=signup`);
+    mutation.mutate(data.user);
   });
 
   return (
     <View py="$8" px={"$4"}>
       <View gap={"$1"}>
-        <H3 textAlign={"center"}>Create an account</H3>
+        <H3 textAlign={"center"}>{t("signUpSheetTitle")}</H3>
         <H5 color={"$colorHover"} textTransform={"none"} textAlign={"center"}>
-          We'll send a verification code to your phone number.
+          {t("signUpSheetMessage")}
         </H5>
       </View>
       <YStack my={"$5"} gap={"$4"}>
@@ -43,7 +62,7 @@ const SignUpBottomSheetUI = () => {
               name: "user",
             }}
             labelProps={{
-              label: "Phone Number",
+              label: t("phoneFieldLabel"),
             }}
             inputProps={{
               autoComplete: "tel",
@@ -53,7 +72,7 @@ const SignUpBottomSheetUI = () => {
           />
         </YStack>
         <Button themeInverse onPress={handleSubmit}>
-          Sign Up
+          {t("buttonSignUp")}
         </Button>
       </YStack>
     </View>
