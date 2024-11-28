@@ -1,5 +1,4 @@
 import React from "react";
-import { useColorScheme } from "react-native";
 import { TamaguiProvider, Theme } from "tamagui";
 import tamaguiConfig from "@/tamagui.config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -8,7 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { reverseTheme } from "@/utils/theme";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({});
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const theme = useThemeStore((s) => s.theme);

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { phoneNumberString } from "@/shared/schema";
 import { useMutation } from "@tanstack/react-query";
 import { mutate } from "@/utils/api";
+import { ApiRoutes } from "@/utils/endpoints";
 
 const signUpSchema = z.object({
   user: phoneNumberString,
@@ -19,13 +20,16 @@ const SignUpBottomSheetUI = () => {
 
   const mutation = useMutation({
     mutationFn: async (phoneNumber: string) => {
-      return await mutate<{ confirmationCode: string }>("auth/send-confirmation-code", "POST", {
+      return await mutate<{ confirmationCode: string }>(ApiRoutes.RequestOtp, "POST", {
         phoneNumber,
       });
     },
-    onSuccess: async (data, phoneNumber, context) => {
-      console.log(data);
-      router.push(`/auth/${phoneNumber}/confirm-otp-signup`);
+    onSuccess: async (data, phoneNumber) => {
+      console.log(data.data.confirmationCode);
+      router.push({
+        pathname: "/auth/[phoneNumber]/confirm-otp-signup",
+        params: { phoneNumber: phoneNumber },
+      });
     },
   });
   const { t } = useTranslation("pageOnboarding");

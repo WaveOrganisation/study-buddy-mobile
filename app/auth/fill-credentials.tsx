@@ -12,6 +12,7 @@ import { ControllerWithError } from "@/components/Input";
 import { passwordString } from "@/shared/schema";
 import { mutate } from "@/utils/api";
 import { useMutation } from "@tanstack/react-query";
+import { ApiRoutes } from "@/utils/endpoints";
 
 const fillCredentialsSchema = z
   .object({
@@ -28,9 +29,11 @@ const fillCredentialsSchema = z
 const FillCredentials = () => {
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof fillCredentialsSchema>) => {
-      return await mutate<{ confirmationCode: string }>("auth/register", "POST", data);
+      return await mutate<{ confirmationCode: string }>(ApiRoutes.SignUp, "POST", data);
     },
-    onSuccess: async (data) => {},
+    onSuccess: async (data) => {
+      console.log(data);
+    },
   });
 
   const params = useLocalSearchParams<{ user: string }>();
@@ -46,7 +49,9 @@ const FillCredentials = () => {
     },
   });
 
-  const handleSubmit = form.handleSubmit((data) => {});
+  const handleSubmit = form.handleSubmit((data) => {
+    mutation.mutate(data);
+  });
 
   return (
     <>

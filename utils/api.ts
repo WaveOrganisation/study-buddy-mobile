@@ -1,87 +1,67 @@
-// import ky, { Options } from "ky";
-//
-// import { IRequestWithoutBody, IRequestWithBody } from "@/types/request";
-// import { IResponse } from "@/types/response";
-// import { API_URL } from "@/utils/const";
-//
-// const defaultHeaders = {
-//   Accept: "application/json",
-//   "Content-Type": "application/json",
-//   locale: "he",
-// };
-//
-
-//
-// export async function query<TResponseData>(
-//   request: IRequestWithoutBody
-// ): Promise<IResponse<TResponseData>> {
-//   const headers = { ...defaultHeaders, ...request.headers };
-//   const url = await buildURL(request);
-//
-//   const options: Options = {
-//     headers: headers,
-//     retry: 0,
-//   };
-//
-//   const response = await ky.get(url, options);
-//
-//   return {
-//     data: await response.json<TResponseData>(),
-//     status: response.status,
-//     statusText: response.statusText,
-//   };
-// }
-//
-// export async function mutate<TResponseData>(
-//   request: IRequestWithBody
-// ): Promise<IResponse<TResponseData>> {
-//   const headers = { ...defaultHeaders, ...request.headers };
-//   const url = await buildURL(request);
-//
-//   const options: Options = {
-//     method: request.method,
-//     headers: headers,
-//     retry: 0,
-//     // body: JSON.stringify(request.body),
-//   };
-//
-//   const response = await ky(url, options);
-//
-//   return {
-//     data: await response.json<TResponseData>(),
-//     status: response.status,
-//     statusText: response.statusText,
-//   };
-// }
-
 import { API_URL } from "@/utils/const";
-import ky, { Options } from "ky";
+import ky, { KyResponse, Options } from "ky";
+import { ApiMetadata, ApiRoutes } from "@/utils/endpoints";
+
+type RequestOptions = Omit<Options, "method" | "body" | "json"> & {
+  noParse?: boolean;
+};
 
 async function buildURL(path: string): Promise<string> {
   const url = new URL(path, API_URL);
   return url.toString();
 }
 
-export async function query<TResponseData>(
-  path: string,
+// Helper function to check if the method is allowed for the given path
+function checkMethodAllowed(path: ApiRoutes, method: string) {
+  if (!ApiMetadata[path].methods.includes(method)) {
+    console.error(`Method ${method} is not allowed for ${path}`);
+    throw new Error(`Method ${method} is not allowed for ${path}`);
+  }
+}
+
+// Helper function to handle response parsing
+async function handleResponse<TResponseData>(
+  response: KyResponse,
+  options?: RequestOptions
+): Promise<{ data: TResponseData; response: KyResponse }> {
+  if (!options?.noParse) {
+    return {
+      data: await response.json<TResponseData>(),
+      response,
+    };
+  }
+  return {
+    data: (await response.text()) as TResponseData,
+    response,
+  };
+}
+
+async function query<TResponseData>(
+  path: ApiRoutes,
   queryParams?: Record<string, string | number | boolean>,
-  options?: Omit<Options, "method" | "body" | "json" | "queryParams">
+  options?: RequestOptions
 ) {
+  checkMethodAllowed(path, "GET");
+
   const url = await buildURL(path);
 
-  return ky.get<TResponseData>(url, {
+  const response = await ky.get<TResponseData>(url, {
     ...options,
     searchParams: queryParams,
   });
+
+  return handleResponse<TResponseData>(response, options);
 }
 
-export async function mutate<TResponseData>(
-  path: string,
+async function mutate<TResponseData>(
+  path: ApiRoutes,
   method: "POST" | "PUT" | "DELETE",
   body: object,
-  options?: Omit<Options, "method" | "body" | "json">
+  options?: RequestOptions
 ) {
-  const url = await buildURL(path); // Build the URL  with the path and query parameters
+  checkMethodAllowed(path, method);
+
+  const url = await buildURL(path);
 
   const response = await ky(url, {
     ...options,
@@ -89,8 +69,7 @@ export async function mutate<TResponseData>(
     json: body,
   });
 
-  return {
-    data: await response.json<TResponseData>(),
-    response,
-  };
+  return handleResponse<TResponseData>(response, options);
 }
+
+export { query, mutate };

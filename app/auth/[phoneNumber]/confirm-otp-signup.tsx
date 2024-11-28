@@ -1,16 +1,17 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import GestureGoBack from "@/components/gestureGoBack";
 import { ConfirmOtp } from "@/components/ConfirmOTPUI";
-import { mutate } from "@/utils/api";
+import { query } from "@/utils/api";
 import { useMutation } from "@tanstack/react-query";
 import { Vibration } from "react-native";
+import { ApiRoutes } from "@/utils/endpoints";
 
 // Page Component
 const Page = () => {
   const mutation = useMutation({
     mutationFn: async ({ phoneNumber, code }: { phoneNumber: string; code: string }) => {
-      return await mutate<{ confirmationCode: string }>("auth/confirm-phone", "POST", {
+      return await query<{ confirmationCode: string }>(ApiRoutes.VerifyOtp, {
         phoneNumber,
         confirmationCode: code,
       });
@@ -29,7 +30,7 @@ const Page = () => {
   console.log(params);
 
   const router = useRouter();
-  const [isCodeResent, setIsCodeResent] = useState(false);
+  // const [isCodeResent, setIsCodeResent] = useState(false);
 
   // Function to handle OTP submission
   const handleOtpFilled = (enteredOtp: string) => {

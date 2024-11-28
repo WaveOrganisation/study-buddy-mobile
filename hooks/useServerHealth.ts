@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Alert } from "react-native";
 import { useServerHealthStore } from "@/stores/useServerHealthStore";
 import checkIsServerHealthy from "@/utils/queries/checkIsServerHealthy";
 import { TimeUtils } from "@/utils/timeUtils";
@@ -13,11 +12,12 @@ export function useServerHealth() {
         await checkIsServerHealthy();
       } catch (error) {
         setHealth(false);
-        Alert.alert(
-          "Server Unreachable",
-          "The server is currently unavailable. Some features may not work.",
-          [{ text: "Retry", onPress: () => "" }]
-        );
+        // Alert.alert(
+        //   "Server Unreachable",
+        //   "The server is currently unavailable. Some features may not work.",
+        //   [{ text: "Retry", onPress: () => "" }]
+        // );
+        console.error("Server might not be healthy");
       }
     };
 
